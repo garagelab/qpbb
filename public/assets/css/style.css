@@ -1,0 +1,14 @@
+html,body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 11px;
+    overflow: hidden;
+}
+
+#map-canvas {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

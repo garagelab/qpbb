@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Qué Pasa Bahía Blanca</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css"/>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="/assets/js/jquery-1.8.3.min.js"></script>
+
+    <script>
+        $(window).load(function () {
+            var mapManager = new MapManager({
+                mapDivId : "map-canvas",
+                mapCenter : {lat: -34.773204, lng: -58.348633},
+                googleMapsOptions: {
+                    zoom : 9,
+                    mapTypeId : google.maps.MapTypeId.ROADMAP
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<div id="map-canvas"></div>
+
+<!--JS Scripts-->
+
+<script src="/assets/js/MapManager.js"></script>
+
+</body>
+</html>
