@@ -16,7 +16,7 @@ var MapManager = function MapManager(options) {
         this.map = new google.maps.Map(document.getElementById(self.options.mapDivId), googleMapOptions);
     }
 
-    this.addFTLayer = function(name, ftId, locationColumn) {
+    this.addFTLayer = function(key, ftId, locationColumn) {
         var self = this;
 
         var layer = new google.maps.FusionTablesLayer({
@@ -26,7 +26,11 @@ var MapManager = function MapManager(options) {
             },
             map: self.map
         });
-        self.layers[name] = layer;
+        self.layers[key] = layer;
+    }
+
+    this.getLayer = function(key) {
+        return this.layers[key];
     }
 
     this.init();
