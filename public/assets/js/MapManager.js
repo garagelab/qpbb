@@ -5,8 +5,8 @@ var MapManager = function MapManager(options) {
 
     this.init = function() {
         var self = this;
-        console.log("init");        //TODO(gb): Remove trace!!!
-        console.log(self.options);        //TODO(gb): Remove trace!!!
+
+        // Initialize Google Map
         var googleMapOptions = {
             zoom: self.options.googleMapsOptions.zoom,
             center: new google.maps.LatLng(self.options.mapCenter.lat, self.options.mapCenter.lng),
