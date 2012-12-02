@@ -46,9 +46,9 @@ var MapManager = function MapManager(options) {
 
         for (var i=0; i<layers.length; i++) {
             var layer = layers[i].layer;
-            var queryOptions = { where: "Fecha >= " + $.datepicker.formatDate('mm/dd/y', from) + " AND Fecha <= " + $.datepicker.formatDate('mm/dd/y', to)};
+            layer.query.where = undefined;
+            var queryOptions = { where: "Fecha >= '" + $.datepicker.formatDate('M d, yy', from) + "' AND Fecha <= '" + $.datepicker.formatDate('M d, yy', to) + "'"};
             $.extend(queryOptions, layer.query);
-            console.log(queryOptions);        //TODO(gb): Remove trace!!!
             layer.setOptions({query:queryOptions});
         }
     }
