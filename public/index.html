@@ -82,6 +82,9 @@
             // Layer de denuncias
             mapManager.addFTLayer("denuncias", "1UUkMV28J2E4Z-EwXMdhd9tCKQMicjWNpekYpJBY", "GEO", "infoWindowTemplateDenuncia", true, {});
 
+            // Layer del 0800
+            mapManager.addFTLayer("0800", "1GAcEw5Ac8jed00q4m7iU-5P3RivH3UUmjvenvUM", "LatLong", null, true, {});
+
             // Controles
             $("#time-slider").slider({
                 range: true,
@@ -123,8 +126,10 @@
     <hr/>
     <div class="row">
         <div class="span12">
-            <p>Rango de tiempo: <span class="date" id="date-from"></span> - <span class="date" id="date-to"></span></p>
-            <div id="time-slider"></div>
+            <div class="controls">
+                <p>Rango de tiempo: <span class="date" id="date-from"></span> - <span class="date" id="date-to"></span></p>
+                <div id="time-slider"></div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -141,9 +146,6 @@
             </div>
         </div>
         <div class="span9">
-            <div id="controls">
-
-            </div>
             <div id="map-canvas"></div>
         </div>
     </div>
