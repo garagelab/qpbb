@@ -29,8 +29,14 @@
             });
 
             // Layer de empresas
-            mapManager.addFTLayer("empresas", "15BUb-8L7bItsq-N-O0ASG8kIo6ZdKXbMnUI3R4g", "geometry");
-            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion");
+            mapManager.addFTLayer("empresas", "15BUb-8L7bItsq-N-O0ASG8kIo6ZdKXbMnUI3R4g", "geometry", {
+                styles: [{
+                    polygonOptions: {
+                        fillColor: "#333333"
+                    }
+                }]
+            });
+            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", {});
 
             // Controles
             $("#time-slider").slider({

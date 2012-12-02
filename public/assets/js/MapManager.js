@@ -16,16 +16,19 @@ var MapManager = function MapManager(options) {
         this.map = new google.maps.Map(document.getElementById(self.options.mapDivId), googleMapOptions);
     }
 
-    this.addFTLayer = function(key, ftId, locationColumn) {
+    this.addFTLayer = function(key, ftId, locationColumn, options) {
         var self = this;
 
-        var layer = new google.maps.FusionTablesLayer({
+        console.log(options);        //TODO(gb): Remove trace!!!
+        $.extend(options, {
             query: {
                 select : locationColumn,
                 from: ftId
             },
             map: self.map
         });
+
+        var layer = new google.maps.FusionTablesLayer(options);
         self.layers[key] = layer;
     }
 
