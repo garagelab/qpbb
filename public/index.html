@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <title>Qué Pasa Bahía Blanca</title>
 
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet/less" type="text/css" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap/jquery-ui-1.8.16.custom.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome-ie7.css">
     <link rel="stylesheet/less" type="text/css" href="/assets/css/style.less">
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -90,6 +92,7 @@
                 slide: function( event, ui ) {
                     var date0 = new Date(ui.values[0] * 1000);
                     var date1 = new Date(ui.values[1] * 1000);
+
                     $("#date-from").text($.datepicker.formatDate('dd/mm/yy', new Date(ui.values[0] * 1000)));
                     $("#date-to").text($.datepicker.formatDate('dd/mm/yy', new Date(ui.values[1] * 1000)));
                 },
@@ -129,6 +132,7 @@
         <div class="span3">
             <div class="well">
                 <h6>Filtro</h6>
+                <i class="icon-task"/>
             </div>
         </div>
         <div class="span9">
