@@ -16,7 +16,7 @@ var MapManager = function MapManager(options) {
         this.map = new google.maps.Map(document.getElementById(self.options.mapDivId), googleMapOptions);
     }
 
-    this.addFTLayer = function(key, ftId, locationColumn, filterable, layerOptions) {
+    this.addFTLayer = function(key, ftId, locationColumn, templateID, filterable, layerOptions) {
         var self = this;
 
         $.extend(layerOptions, {
@@ -28,6 +28,9 @@ var MapManager = function MapManager(options) {
         });
 
         var layer = new google.maps.FusionTablesLayer(layerOptions);
+        google.maps.event.addListener(layer, 'click', function(e) {
+            e.infoWindowHtml = $('#infoWindowTemplateEmpresa').tmpl(e.row).get(0).outerHTML;
+        });
         self.layers.push({key:key, layer:layer, filterable:filterable});
     }
 

@@ -11,9 +11,25 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="/assets/js/jquery-1.8.3.min.js"></script>
+    <script type='text/javascript' src='http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js'></script>
     <script src="/assets/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/less-1.3.1.min.js"></script>
+
+    <!--Templates-->
+    <script id="infoWindowTemplateEmpresa" type="text/x-jquery-tmpl">
+        <div class='googft-info-window' style='font-family: sans-serif'>
+            <h5>${name.value}.</h5> </br>
+                <b>Descripci&oacute;n:</b> ${Descripcion.value}.</br>
+                <b>Sustancias y productos:</b> ${Sustancias_y_productos.value}. </br></br>
+                <b>Contaminantes primarios</b></br>
+                <b>&Oacute;xidos de Nitr&oacute;geno NOx (tn/a&ntilde;o):</b> ${NOx.value}.</br>
+                <b>Mon&oacute;xido de Carbono CO (tn/a&ntilde;o):</b> ${CO.value}.</br>
+                <b>&Oacute;xidos de azufre SOx (tn/a&ntilde;o):</b> ${SOx.value}.</br>
+                <b>Material Particulado MP (tn/a&ntilde;o):</b> ${MP.value}.</br></br>
+                <a href='${link_referencia.value}'  target="_blank">Link de referencia</a>
+        </div>
+    </script>
 
     <script>
 
@@ -29,7 +45,7 @@
             });
 
             // Layer de empresas
-            mapManager.addFTLayer("empresas", "15BUb-8L7bItsq-N-O0ASG8kIo6ZdKXbMnUI3R4g", "geometry", false, {
+            mapManager.addFTLayer("empresas", "1R1pVgXnt7aCYNK7r2UJVnOrDZ5-vFaJlj8XToZw", "geometry", "infoWindowTemplateEmpresa", false, {
                 styles: [{
                     polygonOptions: {
                         fillColor: "#333333"
@@ -38,10 +54,10 @@
             });
 
             // Layers de plantas
-            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", false, {});
+//            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", false, {});
 
             // Layer de denuncias
-            mapManager.addFTLayer("denuncias", "16OQAIN5pfjonhc3s8ub60xGC7iMyoPngelO85aQ", "GEO", true, {});
+//            mapManager.addFTLayer("denuncias", "16OQAIN5pfjonhc3s8ub60xGC7iMyoPngelO85aQ", "GEO", true, {});
 
             // Controles
             $("#time-slider").slider({
