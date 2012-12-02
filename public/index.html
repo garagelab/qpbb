@@ -29,7 +29,7 @@
             });
 
             // Layer de empresas
-            mapManager.addFTLayer("empresas", "15BUb-8L7bItsq-N-O0ASG8kIo6ZdKXbMnUI3R4g", "geometry", {
+            mapManager.addFTLayer("empresas", "15BUb-8L7bItsq-N-O0ASG8kIo6ZdKXbMnUI3R4g", "geometry", false, {
                 styles: [{
                     polygonOptions: {
                         fillColor: "#333333"
@@ -38,10 +38,10 @@
             });
 
             // Layers de plantas
-            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", {});
+            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", false, {});
 
             // Layer de denuncias
-            mapManager.addFTLayer("denuncias", "16OQAIN5pfjonhc3s8ub60xGC7iMyoPngelO85aQ", "GEO", {});
+            mapManager.addFTLayer("denuncias", "16OQAIN5pfjonhc3s8ub60xGC7iMyoPngelO85aQ", "GEO", true, {});
 
             // Controles
             $("#time-slider").slider({
@@ -53,17 +53,17 @@
                 slide: function( event, ui ) {
                     var date0 = new Date(ui.values[0] * 1000);
                     var date1 = new Date(ui.values[1] * 1000);
-                    $("#date-from").text(date0.getDate() + "/" + date0.getMonth() + "/" + date0.getFullYear());
-                    $("#date-to").text(date1.getDate() + "/" + date1.getMonth() + "/" + date1.getFullYear());
+                    $("#date-from").text($.datepicker.formatDate('dd/mm/yy', new Date(ui.values[0] * 1000)));
+                    $("#date-to").text($.datepicker.formatDate('dd/mm/yy', new Date(ui.values[1] * 1000)));
                 },
                 change: function(event, ui) {
-                    console.log("Update map");        //TODO(gb): Remove trace!!!
+                    mapManager.filterMap(new Date(ui.values[0] * 1000), new Date(ui.values[1] * 1000));
                 }
             });
             var date0 = new Date($( "#time-slider" ).slider( "values", 0 ) * 1000);
             var date1 = new Date($( "#time-slider" ).slider( "values", 1 ) * 1000);
-            $("#date-from").text(date0.getDate() + "/" + date0.getMonth() + "/" + date0.getFullYear());
-            $("#date-to").text(date1.getDate() + "/" + date1.getMonth() + "/" + date1.getFullYear());
+            $("#date-from").text($.datepicker.formatDate('dd/mm/yy', date0));
+            $("#date-to").text($.datepicker.formatDate('dd/mm/yy', date1));
         });
     </script>
 </head>

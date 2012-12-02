@@ -2,7 +2,7 @@ var MapManager = function MapManager(options) {
 
     this.options = options;
     this.map = null;
-    this.layers = {};
+    this.layers = [];
 
     this.init = function() {
         var self = this;
@@ -16,7 +16,7 @@ var MapManager = function MapManager(options) {
         this.map = new google.maps.Map(document.getElementById(self.options.mapDivId), googleMapOptions);
     }
 
-    this.addFTLayer = function(key, ftId, locationColumn, layerOptions) {
+    this.addFTLayer = function(key, ftId, locationColumn, filterable, layerOptions) {
         var self = this;
 
         $.extend(layerOptions, {
@@ -28,11 +28,25 @@ var MapManager = function MapManager(options) {
         });
 
         var layer = new google.maps.FusionTablesLayer(layerOptions);
-        self.layers[key] = layer;
+        self.layers.push({key:key, layer:layer, filterable:filterable});
     }
 
-    this.getLayer = function(key) {
-        return this.layers[key];
+    this.filterMap = function(from, to) {
+        var self = this;
+        console.log("filter map from " + from + " to " + to);        //TODO(gb): Remove trace!!!
+
+        var layers = self.layers.filter(function(layer) {
+            return layer.filterable;
+        });
+
+        for (var i=0; i<layers.length; i++) {
+            var layer = layers[i].layer;
+            var queryOptions = { where: "Fecha = 11/01/12" };
+            $.extend(queryOptions, layer.query);
+//            console.log(queryOptions);        //TODO(gb): Remove trace!!!
+
+            layer.setOptions({query:queryOptions});
+        }
     }
 
     this.init();
