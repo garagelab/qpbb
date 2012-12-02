@@ -28,15 +28,17 @@ var MapManager = function MapManager(options) {
         });
 
         var layer = new google.maps.FusionTablesLayer(layerOptions);
-        google.maps.event.addListener(layer, 'click', function(e) {
-            e.infoWindowHtml = $('#infoWindowTemplateEmpresa').tmpl(e.row).get(0).outerHTML;
-        });
+        if (templateID) {
+            google.maps.event.addListener(layer, 'click', function(e) {
+                e.infoWindowHtml = $('#infoWindowTemplateEmpresa').tmpl(e.row).get(0).outerHTML;
+            });
+        }
+
         self.layers.push({key:key, layer:layer, filterable:filterable});
     }
 
     this.filterMap = function(from, to) {
         var self = this;
-        console.log("filter map from " + from + " to " + to);        //TODO(gb): Remove trace!!!
 
         var layers = self.layers.filter(function(layer) {
             return layer.filterable;
@@ -44,10 +46,9 @@ var MapManager = function MapManager(options) {
 
         for (var i=0; i<layers.length; i++) {
             var layer = layers[i].layer;
-            var queryOptions = { where: "Fecha = 11/01/12" };
+            var queryOptions = { where: "Fecha >= " + $.datepicker.formatDate('mm/dd/y', from) + " AND Fecha <= " + $.datepicker.formatDate('mm/dd/y', to)};
             $.extend(queryOptions, layer.query);
-//            console.log(queryOptions);        //TODO(gb): Remove trace!!!
-
+            console.log(queryOptions);        //TODO(gb): Remove trace!!!
             layer.setOptions({query:queryOptions});
         }
     }
