@@ -117,8 +117,8 @@
     <hr>
 
     <div class="">
-        <p class="lead" style="font-size: 20px;">Mostramos información pública y reportes de vecinos sobre los problemas de la ciudad, el Polo Petroquímico y el Puerto, representados como eventos a lo largo del tiempo y en su ubicación específica.</p>
-        <p>La pataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
+        <p class="lead" style="font-size: 20px;">Convertimos datos técnicos del municipio en información accesible y la integramos con reportes de vecinos sobre los problemas de la ciudad, el Polo Petroquímico y el Puerto.</p>
+        <p>La plataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
     </div>
     <hr/>
     <div class="row">
@@ -132,11 +132,25 @@
             <div id="filter" class="well">
                 <h6>Filtro</h6>
                 <ul class="unstyled">
-                    <li><i class="icon-check-empty"></i> Empresas</li>
-                    <li><i class="icon-check-empty"></i> Salud</li>
-                    <li><i class="icon-check-empty"></i> Reclamos CTE</li>
-                    <li><i class="icon-check-empty"></i> Reclamos 0800</li>
-                    <li><i class="icon-check-empty"></i> Aire</li>
+                    <li>
+                        <a href="#" class="popoverItem" rel="popover" data-placement="right" data-content="De las 16 empresas que ocupan el Polo, 3 son petroquímicas, 2 son petroleras, 1 es agroquímica, 4 son gasíferas, 1 es eléctrica, y 5 son cerealeras. De las 45 actas de inspección labradas por el CTE en el 2012, el 8 fueron hechas a la Central Piedrabuena S.A., 7 a Solvay Indupa S.A.I.C., y 6 a Petrobrás Argentina S.A." data-original-title="Qué pasa en el polo petroquímico?">
+                        <i class="icon-check-empty"></i> Empresas</a>
+                    </li>
+                    <li>
+                        <a href="#" class="popoverItem" rel="popover" data-placement="right" data-content="De las 16 empresas que ocupan el Polo, 3 son petroquímicas, 2 son petroleras, 1 es agroquímica, 4 son gasíferas, 1 es eléctrica, y 5 son cerealeras. De las 45 actas de inspección labradas por el CTE en el 2012, el 8 fueron hechas a la Central Piedrabuena S.A., 7 a Solvay Indupa S.A.I.C., y 6 a Petrobrás Argentina S.A." data-original-title="¿Qué pasa con la salud?">
+                        <i class="icon-check-empty"></i> Salud</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="icon-check-empty"></i> Vecinos</a>
+                        <ul class="unstyled">
+                            <li><a href="#" class="popoverItem" rel="popover" data-placement="right" data-content="El Sistema de Gestión de Respuesta al Vecino 0800Bahía lleva registradas 36.252 llamadas desde el 1 de enero de 2008. Sirven para obtener respuestas sobre cuestiones de la órbita comunal no vinculadas a las emergencias. La limpieza de un terreno, el alumbrado público y las aguas servidas son los problemas que más se registraron." data-original-title="¿Qué dicen los vecinos?"><i class="icon-check-empty"></i> 0800 Bahía</a></li>
+                            <li><a href="#" class="popoverItem" rel="popover" data-placement="right" data-content="Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa." data-original-title="¿Qué dicen los vecinos?"><i class="icon-check-empty"></i> Reclamos al CTE</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="popoverItem" rel="popover" data-placement="right" data-content="Los valores de medición del aire son tomados por el único sensor que posee el CTE y que tiene un radio de alcance de 4 km. Desde el año 2009, se registraron 993 hs, equivalente a  41 días, en los cuales los índices de calidad de aire excedieron los niveles admitidos. De ese registro, 789 hs equivalente a 32 días, fue peligroso para grupos en situación de riesgo. Durante 178 hs, equivalente a 7 días, fue insalubre, durante 14 hs muy insalubre, y durante 20 hs, peligroso. Se registraron 975 hs donde el índice de Material Particulado PM10 fue mayor al aceptado por la norma. Se registraron niveles mayores a los admisibles de Monóxido de Carbono durante 10 hs y de Ozono por 8hs." data-original-title="¿Qué pasa en aire?">
+                        <i class="icon-check-empty"></i> Aire</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -151,6 +165,18 @@
 
 
 <!--JS Scripts-->
+<script type="text/javascript">
+    $(function(){
+
+
+        $('.popoverItem').hover(function(){
+            $(this).popover('show');
+        }, function(){
+            $(this).popover('hide');
+        });
+
+    });
+</script>
 
 <script src="/assets/js/MapManager.js"></script>
 <script src="/assets/js/FTClient.js"></script>
