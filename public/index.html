@@ -30,6 +30,27 @@
                 <a href='${link_referencia.value}'  target="_blank">Link de referencia</a>
         </div>
     </script>
+    <script id="infoWindowTemplatePlanta" type="text/x-jquery-tmpl">
+        <div class='googft-info-window' style='font-family: sans-serif'>
+            <h5>${nombre.value}.</h5> </br>
+                <b>Direcci&oacute;n:</b> ${direccion.value}.</br>
+                <b>Tel&eacute;fono:</b> ${telefono.value}.</br>
+                <b>Fecha de registro:</b> ${dhRegistro.value}. </br>
+                <b>Acta:</b>${NombreActa.value}.</br>
+        </div>
+    </script>
+    <script id="infoWindowTemplateDenuncia" type="text/x-jquery-tmpl">
+        <div class='googft-info-window' style='font-family: sans-serif'>
+            <b>Origen de la denuncia:</b> ${Origen.value}. </br>
+            ${Fecha.value} - ${Hora.value}</br>
+            <b>Direcci&oacute;n:</b> ${Direccion.value}. </br>
+            <b>Detalle de la denuncia:</b></br>
+            ${Descripcion.value}</br>
+            <b>Informe:</b></br>
+            ${Informe.value}
+
+        </div>
+    </script>
 
     <script>
 
@@ -54,10 +75,10 @@
             });
 
             // Layers de plantas
-            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", null, false, {});
+            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", "infoWindowTemplatePlanta", false, {});
 
             // Layer de denuncias
-            mapManager.addFTLayer("denuncias", "1lMOsDsXXnpL4LrEjpFlLvNIap81DhAhnBXO3g3c", "GEO", null, true, {});
+            mapManager.addFTLayer("denuncias", "1UUkMV28J2E4Z-EwXMdhd9tCKQMicjWNpekYpJBY", "GEO", "infoWindowTemplateDenuncia", true, {});
 
             // Controles
             $("#time-slider").slider({

@@ -30,7 +30,7 @@ var MapManager = function MapManager(options) {
         var layer = new google.maps.FusionTablesLayer(layerOptions);
         if (templateID) {
             google.maps.event.addListener(layer, 'click', function(e) {
-                e.infoWindowHtml = $('#infoWindowTemplateEmpresa').tmpl(e.row).get(0).outerHTML;
+                e.infoWindowHtml = $('#'+templateID).tmpl(e.row).get(0).outerHTML;
             });
         }
 
