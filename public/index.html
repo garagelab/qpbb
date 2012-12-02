@@ -6,7 +6,7 @@
     <title>Qué Pasa Bahía Blanca</title>
 
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/css/ui-lightness/jquery-ui-1.9.2.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap/jquery-ui-1.8.16.custom.css">
     <link rel="stylesheet/less" type="text/css" href="/assets/css/style.less">
 
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -20,23 +20,23 @@
     <script id="infoWindowTemplateEmpresa" type="text/x-jquery-tmpl">
         <div class='googft-info-window' style='font-family: sans-serif'>
             <h5>${name.value}.</h5> </br>
-                <b>Descripci&oacute;n:</b> ${Descripcion.value}.</br>
-                <b>Sustancias y productos:</b> ${Sustancias_y_productos.value}. </br></br>
-                <b>Contaminantes primarios</b></br>
-                <b>&Oacute;xidos de Nitr&oacute;geno NOx (tn/a&ntilde;o):</b> ${NOx.value}.</br>
-                <b>Mon&oacute;xido de Carbono CO (tn/a&ntilde;o):</b> ${CO.value}.</br>
-                <b>&Oacute;xidos de azufre SOx (tn/a&ntilde;o):</b> ${SOx.value}.</br>
-                <b>Material Particulado MP (tn/a&ntilde;o):</b> ${MP.value}.</br></br>
-                <a href='${link_referencia.value}'  target="_blank">Link de referencia</a>
+            <b>Descripci&oacute;n:</b> ${Descripcion.value}.</br>
+            <b>Sustancias y productos:</b> ${Sustancias_y_productos.value}. </br></br>
+            <b>Contaminantes primarios</b></br>
+            <b>&Oacute;xidos de Nitr&oacute;geno NOx (tn/a&ntilde;o):</b> ${NOx.value}.</br>
+            <b>Mon&oacute;xido de Carbono CO (tn/a&ntilde;o):</b> ${CO.value}.</br>
+            <b>&Oacute;xidos de azufre SOx (tn/a&ntilde;o):</b> ${SOx.value}.</br>
+            <b>Material Particulado MP (tn/a&ntilde;o):</b> ${MP.value}.</br></br>
+            <a href='${link_referencia.value}'  target="_blank">Link de referencia</a>
         </div>
     </script>
     <script id="infoWindowTemplatePlanta" type="text/x-jquery-tmpl">
         <div class='googft-info-window' style='font-family: sans-serif'>
             <h5>${nombre.value}.</h5> </br>
-                <b>Direcci&oacute;n:</b> ${direccion.value}.</br>
-                <b>Tel&eacute;fono:</b> ${telefono.value}.</br>
-                <b>Fecha de registro:</b> ${dhRegistro.value}. </br>
-                <b>Acta:</b>${NombreActa.value}.</br>
+            <b>Direcci&oacute;n:</b> ${direccion.value}.</br>
+            <b>Tel&eacute;fono:</b> ${telefono.value}.</br>
+            <b>Fecha de registro:</b> ${dhRegistro.value}. </br>
+            <b>Acta:</b>${NombreActa.value}.</br>
         </div>
     </script>
     <script id="infoWindowTemplateDenuncia" type="text/x-jquery-tmpl">
@@ -108,14 +108,36 @@
 <body>
 
 <div class="container">
+    <div class="masthead">
+        <h2>qpbb <small>¿Qué pasa, Bahía Blanca?</small></h2>
+    </div>
+
+    <hr>
+
+    <div class="">
+        <p class="lead">Mostramos información pública y reportes de vecinos sobre los problemas de la ciudad, el Polo Petroquímico y el Puerto, representados como eventos a lo largo del tiempo y en su ubicación específica.</p>
+
+        <p>La pataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
+
+        <p><strong>¿Qué pasa bahia blanca?</strong> Visualiza situaciones significativas de la ciudad como eventos pero tambien muestra tendencias</p>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="span3"></div>
+        <div class="span9">
+            <p>Rango de tiempo: <span class="date" id="date-from"></span> - <span class="date" id="date-to"></span></p>
+            <div id="time-slider"></div>
+        </div>
+    </div>
     <div class="row">
         <div class="span3">
-            <h6>Filtro</h6>
+            <div class="well">
+                <h6>Filtro</h6>
+            </div>
         </div>
         <div class="span9">
             <div id="controls">
-                <p>Rango de tiempo: <span class="date" id="date-from"></span> - <span class="date" id="date-to"></span></p>
-                <div id="time-slider"></div>
+
             </div>
             <div id="map-canvas"></div>
         </div>
