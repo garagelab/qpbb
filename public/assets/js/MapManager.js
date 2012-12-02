@@ -53,5 +53,19 @@ var MapManager = function MapManager(options) {
         }
     }
 
+    this.showLayer = function(key) {
+        var layer = this.layers.filter(function(layer) {
+            return layer.key == key;
+        });
+        layer[0].layer.setMap(this.map);
+    }
+
+    this.hideLayer = function(key) {
+        var layer = this.layers.filter(function(layer) {
+            return layer.key == key;
+        });
+        layer[0].layer.setMap(null);
+    }
+
     this.init();
 }
