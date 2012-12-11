@@ -4,6 +4,9 @@ var MapManager = function MapManager(options) {
     this.map = null;
     this.layers = [];
     this.polygons = [];
+    this.types = {
+        denuncias : { minLog: 0, maxLog: 0 }
+    };
 
     this.init = function() {
         var self = this;
@@ -68,23 +71,23 @@ var MapManager = function MapManager(options) {
         layer[0].layer.setMap(null);
     }
 
-    this.addPolygon = function(name, coordinates) {
+    this.addPolygon = function(name, coordinates, area) {
         var self = this;
 
-//        console.log("Adding " + name + " polygon: " + coordinates.length + " points...");        //TODO(gb): Remove trace!!!
         var polygon = new google.maps.Polygon({
             paths: self._coordinatesToLatLng(coordinates),
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.8,
+            strokeColor: "#333333",
+            strokeOpacity: 0.5,
             strokeWeight: 1,
             fillColor: "#FF0000",
-            fillOpacity: 1
+            fillOpacity: 0
         });
 
         self.polygons.push({
             name: name,
             polygon: polygon,
-            denuncias: { count: 0 }
+            area: area,
+            denuncias: { count: 0, log: 0 }
         });
     }
 
@@ -97,6 +100,10 @@ var MapManager = function MapManager(options) {
             var polygon = self.polygons[i];
             if (google.maps.geometry.poly.containsLocation(point, polygon.polygon)) {
                 polygon[type].count++;
+                polygon[type].log = Math.log(polygon[type].count + 1);
+                if (polygon[type].log > self.types[type].maxLog) {
+                    self.types[type].maxLog = polygon[type].log;
+                }
                 break;
             }
         }
@@ -104,19 +111,13 @@ var MapManager = function MapManager(options) {
 
     this.renderPolygons = function(type) {
         var self = this;
-        var min = 0;
-        var max = 191;
-        var levels = 4;
 
         for (var i=0; i<self.polygons.length; i++) {
             var polygon = self.polygons[i];
-            var count = polygon[type].count;
-            var opacity = Math.floor(count / Math.floor(max/levels)) / levels;
+            var opacity = polygon[type].log / self.types[type].maxLog;
             polygon.polygon.fillOpacity = opacity;
             polygon.polygon.setMap(self.map);
         }
-
-
     }
 
     this._coordinatesToLatLng = function(coordinates) {
