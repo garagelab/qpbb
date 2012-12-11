@@ -3,6 +3,7 @@ var MapManager = function MapManager(options) {
     this.options = options;
     this.map = null;
     this.layers = [];
+    this.polygons = [];
 
     this.init = function() {
         var self = this;
@@ -65,6 +66,66 @@ var MapManager = function MapManager(options) {
             return layer.key == key;
         });
         layer[0].layer.setMap(null);
+    }
+
+    this.addPolygon = function(name, coordinates) {
+        var self = this;
+
+//        console.log("Adding " + name + " polygon: " + coordinates.length + " points...");        //TODO(gb): Remove trace!!!
+        var polygon = new google.maps.Polygon({
+            paths: self._coordinatesToLatLng(coordinates),
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: "#FF0000",
+            fillOpacity: 1
+        });
+
+        self.polygons.push({
+            name: name,
+            polygon: polygon,
+            denuncias: { count: 0 }
+        });
+    }
+
+    this.addToCorrespondingPolygon = function(type, coordinate) {
+        var self = this;
+
+        var point = new google.maps.LatLng(coordinate[0], coordinate[1]);
+
+        for (var i=0; i<self.polygons.length; i++) {
+            var polygon = self.polygons[i];
+            if (google.maps.geometry.poly.containsLocation(point, polygon.polygon)) {
+                polygon[type].count++;
+                break;
+            }
+        }
+    }
+
+    this.renderPolygons = function(type) {
+        var self = this;
+        var min = 0;
+        var max = 191;
+        var levels = 4;
+
+        for (var i=0; i<self.polygons.length; i++) {
+            var polygon = self.polygons[i];
+            var count = polygon[type].count;
+            var opacity = Math.floor(count / Math.floor(max/levels)) / levels;
+            polygon.polygon.fillOpacity = opacity;
+            polygon.polygon.setMap(self.map);
+        }
+
+
+    }
+
+    this._coordinatesToLatLng = function(coordinates) {
+        var array = [];
+        for (var i=0; i<coordinates.length; i++) {
+            array.push(new google.maps.LatLng(coordinates[i][1], coordinates[i][0]));
+        }
+
+        return array;
     }
 
     this.init();
