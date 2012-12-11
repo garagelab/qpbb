@@ -15,7 +15,8 @@ var MapManager = function MapManager(options) {
         var googleMapOptions = {
             zoom: self.options.googleMapsOptions.zoom,
             center: new google.maps.LatLng(self.options.mapCenter.lat, self.options.mapCenter.lng),
-            mapTypeId: self.options.googleMapsOptions.mapTypeId
+            mapTypeId: self.options.googleMapsOptions.mapTypeId,
+            styles: self.options.googleMapsOptions.styles
         };
         this.map = new google.maps.Map(document.getElementById(self.options.mapDivId), googleMapOptions);
     }

@@ -67,7 +67,15 @@
                 mapCenter : {lat: -38.7214, lng: -62.258908},
                 googleMapsOptions: {
                     zoom : 12,
-                    mapTypeId : google.maps.MapTypeId.ROADMAP
+                    mapTypeId : google.maps.MapTypeId.ROADMAP,
+                    styles: [
+                        {
+                            "elementType": "labels",
+                            "stylers": [
+                                { "visibility": "off" }
+                            ]
+                        }
+                    ]
                 }
             });
 
