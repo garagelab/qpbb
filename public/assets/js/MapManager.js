@@ -121,6 +121,14 @@ var MapManager = function MapManager(options) {
         }
     }
 
+    this._computeRGBColorModel = function(n) {
+        var r = Math.floor((255*n)/100);
+        var g = Math.floor((255*(100-n))/100);
+        var b = 0;
+
+        return "rgb(" + r + "," + g + "," + b + ")";
+    }
+
     this._coordinatesToLatLng = function(coordinates) {
         var array = [];
         for (var i=0; i<coordinates.length; i++) {
