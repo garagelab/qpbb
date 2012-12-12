@@ -58,7 +58,6 @@
     <script>
         var mapManager;
         var radiosFT;
-        var denunciasFT;
 
         $(window).load(function () {
             // Mapa
@@ -79,7 +78,6 @@
                 }
             });
 
-            // Radios Censales
             radiosFT = new FTClient("1Oc--K4VExbbFppPSm8gG-7GtheahmEPH3ZeKT1I");
             radiosFT.query(["name", "geometry", "SHAPE_AREA"], null, null, function(data) {
                 var rows = data.table.rows;
@@ -89,20 +87,13 @@
                     mapManager.addPolygon(row[0], row[1].coordinates[0], row[2]);
                 }
 
-                denunciasFT = new FTClient("1UUkMV28J2E4Z-EwXMdhd9tCKQMicjWNpekYpJBY");
-                denunciasFT.query(["GEO"], "GEO NOT EQUAL TO ''", null, function(data) {
-                    var rows = data.table.rows;
-                    console.log("Se encontraron " + rows.length + " denuncias geolocalizadas.");        //TODO(gb): Remove trace!!!
-
-                    for (var i=0; i<rows.length; i++) {
-                        var row = rows[i];
-                        mapManager.addToCorrespondingPolygon("denuncias", row[0].split(", "));
-                    }
-
-                    mapManager.renderPolygons("denuncias");
-
-                });
+                var type = $("#mapType").val();
+                mapManager.setMapType(type);
             });
+
+            // App
+            var qpbb = new Qpbb(mapManager);
+            qpbb.init();
         });
 
         $(window).load(function () {
@@ -134,28 +125,8 @@
             // Layer del 0800
 //            mapManager.addFTLayer("0800", "18HFRQfoJHjyRvd2BeUeK8G4UauJh8pNFgByan5s", "LatLong", null, true, {});
 
-            // Controles
-            $("#time-slider").slider({
-                range: true,
-                min: 1199145600,        // 01/01/2008 UNIX time
-                max: 1356912000,        // 31/12/2012 UNIX time
-                step: 60 * 60 * 24,     // 1 day
-                values: [1199145600, 1356912000],
-                slide: function( event, ui ) {
-                    var date0 = new Date(ui.values[0] * 1000);
-                    var date1 = new Date(ui.values[1] * 1000);
 
-                    $("#date-from").text($.datepicker.formatDate('dd/mm/yy', new Date(ui.values[0] * 1000)));
-                    $("#date-to").text($.datepicker.formatDate('dd/mm/yy', new Date(ui.values[1] * 1000)));
-                },
-                change: function(event, ui) {
-                    mapManager.filterMap(new Date(ui.values[0] * 1000), new Date(ui.values[1] * 1000));
-                }
-            });
-            var date0 = new Date($( "#time-slider" ).slider( "values", 0 ) * 1000);
-            var date1 = new Date($( "#time-slider" ).slider( "values", 1 ) * 1000);
-            $("#date-from").text($.datepicker.formatDate('dd/mm/yy', date0));
-            $("#date-to").text($.datepicker.formatDate('dd/mm/yy', date1));
+
         });
     </script>
 </head>
@@ -213,6 +184,18 @@
             </div>
         </div>
         <div class="span9">
+            <div class="well well-small">
+                <form class="form-inline" style="margin-bottom: 0px;">
+                    <fieldset>
+                        <label>Seleccione la vista </label>
+                        <select id="mapType" class="input-medium">
+                            <option value="denuncias">Denuncias CTE</option>
+                            <option value="salud">Salud</option>
+                        </select>
+                    </fieldset>
+                </form>
+            </div>
+
             <div id="map-canvas"></div>
         </div>
     </div>
@@ -243,6 +226,7 @@
 
 <script src="/assets/js/MapManager.js"></script>
 <script src="/assets/js/FTClient.js"></script>
+<script src="/assets/js/qpbb.js"></script>
 
 </body>
 </html>

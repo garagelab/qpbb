@@ -5,7 +5,28 @@ var MapManager = function MapManager(options) {
     this.layers = [];
     this.polygons = [];
     this.types = {
-        denuncias : { minLog: 0, maxLog: 0 }
+        denuncias : {
+            minLog: 0, maxLog: 0,
+            ftClient: null,
+            ftId: "1UUkMV28J2E4Z-EwXMdhd9tCKQMicjWNpekYpJBY",
+            columnArray: ["GEO"],
+            whereClause: "GEO NOT EQUAL TO ''",
+            orderClause: null,
+            getCoordinates: function(row) {
+                return row[0].split(", ");
+            }
+        },
+        salud : {
+            minLog: 0, maxLog: 0,
+            ftClient: null,
+            ftId: "1BNXWW11eP7gH-SSo_YNhg1qth1PoKX8HwhfxFJ0",
+            columnArray: ["Latitude", "Longitude"],
+            whereClause: "Latitude NOT EQUAL TO '' AND Longitude NOT EQUAL TO ''",
+            orderClause: null,
+            getCoordinates: function(row) {
+                return [row[0], row[1]];
+            }
+        }
     };
 
     this.init = function() {
@@ -88,9 +109,41 @@ var MapManager = function MapManager(options) {
             name: name,
             polygon: polygon,
             area: area,
-            denuncias: { count: 0, log: 0 }
+            denuncias: { count: 0, log: 0 },
+            salud: { count: 0, log: 0 }
         });
     }
+
+    this.setMapType = function(type) {
+        var self = this;
+        console.log("Setting map '" + type + "'");        //TODO(gb): Remove trace!!!
+
+        var typeObj = self.types[type];
+
+        if (!typeObj.ftClient) {
+            var ftClient = new FTClient(typeObj.ftId);
+            typeObj.ftClient = ftClient;
+            typeObj.ftClient.query(typeObj.columnArray, typeObj.whereClause, typeObj.orderClause, function(data) {
+                var rows = data.table.rows;
+                console.log("Se encontraron " + rows.length + " puntos...");        //TODO(gb): Remove trace!!!
+
+                console.log("Agregando puntos a los polígonos...");        //TODO(gb): Remove trace!!!
+                for (var i=0; i<rows.length; i++) {
+                    var row = rows[i];
+                    self.addToCorrespondingPolygon(type, typeObj.getCoordinates(row));
+                }
+                console.log("Renderizando los polígonos");        //TODO(gb): Remove trace!!!
+                self.renderPolygons(type);
+                console.log("Mapa listo.\n");        //TODO(gb): Remove trace!!!
+
+            });
+        } else {
+            console.log("Renderizando los polígonos");        //TODO(gb): Remove trace!!!
+            self.renderPolygons(type);
+            console.log("Mapa listo.\n");        //TODO(gb): Remove trace!!!
+        }
+
+    };
 
     this.addToCorrespondingPolygon = function(type, coordinate) {
         var self = this;
@@ -116,8 +169,12 @@ var MapManager = function MapManager(options) {
         for (var i=0; i<self.polygons.length; i++) {
             var polygon = self.polygons[i];
             var opacity = polygon[type].log / self.types[type].maxLog;
-            polygon.polygon.fillOpacity = opacity;
-            polygon.polygon.setMap(self.map);
+            polygon.polygon.setOptions({
+                fillOpacity: opacity
+            });
+//            polygon.polygon.fillOpacity = opacity;
+            if (!polygon.polygon.map)
+                polygon.polygon.setMap(self.map);
         }
     }
 
