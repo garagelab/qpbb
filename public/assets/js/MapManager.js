@@ -6,26 +6,30 @@ var MapManager = function MapManager(options) {
     this.polygons = [];
     this.types = {
         denuncias : {
-            minLog: 0, maxLog: 0,
-            ftClient: null,
-            ftId: "1UUkMV28J2E4Z-EwXMdhd9tCKQMicjWNpekYpJBY",
-            columnArray: ["GEO"],
-            whereClause: "GEO NOT EQUAL TO ''",
-            orderClause: null,
-            getCoordinates: function(row) {
+            minLog : 0, maxLog : 0,
+            ftClient : null,
+            ftId : "1shWmb-II63atGM0jcTv8rI6IVrgyunbwWpfUzz8",
+            columnArray : ["GEO", "Poligono"],
+            whereClause : "GEO NOT EQUAL TO ''",
+            orderClause : null,
+            getCoordinates : function(row) {
                 return row[0].split(", ");
+            },
+            getPolygonName : function(row) {
+                return row[1];
             }
         },
         salud : {
-            minLog: 0, maxLog: 0,
-            ftClient: null,
-            ftId: "1BNXWW11eP7gH-SSo_YNhg1qth1PoKX8HwhfxFJ0",
-            columnArray: ["Latitude", "Longitude"],
-            whereClause: "Latitude NOT EQUAL TO '' AND Longitude NOT EQUAL TO ''",
-            orderClause: null,
-            getCoordinates: function(row) {
+            minLog : 0, maxLog : 0,
+            ftClient : null,
+            ftId : "1BNXWW11eP7gH-SSo_YNhg1qth1PoKX8HwhfxFJ0",
+            columnArray : ["Latitude", "Longitude"],
+            whereClause : "Latitude NOT EQUAL TO '' AND Longitude NOT EQUAL TO ''",
+            orderClause : null,
+            getCoordinates : function(row) {
                 return [row[0], row[1]];
-            }
+            },
+            getPolygonName : null
         }
     };
 
@@ -128,10 +132,19 @@ var MapManager = function MapManager(options) {
                 console.log("Se encontraron " + rows.length + " puntos...");        //TODO(gb): Remove trace!!!
 
                 console.log("Agregando puntos a los polígonos...");        //TODO(gb): Remove trace!!!
-                for (var i=0; i<rows.length; i++) {
-                    var row = rows[i];
-                    self.addToCorrespondingPolygon(type, typeObj.getCoordinates(row));
+                if (typeObj.getPolygonName) {
+                    console.log("El mapa tiene los polígonos precalculados...");        //TODO(gb): Remove trace!!!
+                    for (var i=0; i<rows.length; i++) {
+                        self.addToPolygon(type, typeObj.getPolygonName(rows[i]));
+                    }
+                } else {
+                    console.log("El mapa no tiene los polígonos precalculados...");        //TODO(gb): Remove trace!!!
+                    for (var i=0; i<rows.length; i++) {
+                        var row = rows[i];
+                        self.addToCorrespondingPolygon(type, typeObj.getCoordinates(row));
+                    }
                 }
+
                 console.log("Renderizando los polígonos");        //TODO(gb): Remove trace!!!
                 self.renderPolygons(type);
                 console.log("Mapa listo.\n");        //TODO(gb): Remove trace!!!
@@ -153,15 +166,31 @@ var MapManager = function MapManager(options) {
         for (var i=0; i<self.polygons.length; i++) {
             var polygon = self.polygons[i];
             if (google.maps.geometry.poly.containsLocation(point, polygon.polygon)) {
-                polygon[type].count++;
-                polygon[type].log = Math.log(polygon[type].count + 1);
-                if (polygon[type].log > self.types[type].maxLog) {
-                    self.types[type].maxLog = polygon[type].log;
-                }
+                this._updatePolygonCount(polygon, type);
                 break;
             }
         }
-    }
+    };
+
+    this._updatePolygonCount = function(polygon, type) {
+        var self = this;
+
+        polygon[type].count++;
+        polygon[type].log = Math.log(polygon[type].count + 1);
+        if (polygon[type].log > self.types[type].maxLog) {
+            self.types[type].maxLog = polygon[type].log;
+        }
+    };
+
+    this.addToPolygon = function(type, polygonName) {
+        var self = this;
+
+        var polygons = self.polygons.filter(function(polygon) {
+            return polygon.name == polygonName;
+        });
+
+        self._updatePolygonCount(polygons[0], type);
+    };
 
     this.renderPolygons = function(type) {
         var self = this;
@@ -172,11 +201,10 @@ var MapManager = function MapManager(options) {
             polygon.polygon.setOptions({
                 fillOpacity: opacity
             });
-//            polygon.polygon.fillOpacity = opacity;
             if (!polygon.polygon.map)
                 polygon.polygon.setMap(self.map);
         }
-    }
+    };
 
     this._computeRGBColorModel = function(n) {
         var r = Math.floor((255*n)/100);
