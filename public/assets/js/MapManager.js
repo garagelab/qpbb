@@ -133,12 +133,10 @@ var MapManager = function MapManager(options) {
 
                 console.log("Agregando puntos a los polígonos...");        //TODO(gb): Remove trace!!!
                 if (typeObj.getPolygonName) {
-                    console.log("El mapa tiene los polígonos precalculados...");        //TODO(gb): Remove trace!!!
                     for (var i=0; i<rows.length; i++) {
                         self.addToPolygon(type, typeObj.getPolygonName(rows[i]));
                     }
                 } else {
-                    console.log("El mapa no tiene los polígonos precalculados...");        //TODO(gb): Remove trace!!!
                     for (var i=0; i<rows.length; i++) {
                         var row = rows[i];
                         self.addToCorrespondingPolygon(type, typeObj.getCoordinates(row));
