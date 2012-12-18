@@ -108,7 +108,7 @@ var MapManager = function MapManager(options) {
             strokeOpacity: 0.5,
             strokeWeight: 1,
             fillColor: "#FF0000",
-            fillOpacity: 0
+            fillOpacity: 0.5
         });
 
         self.polygons.push({
@@ -134,15 +134,8 @@ var MapManager = function MapManager(options) {
                 console.log("Se encontraron " + rows.length + " puntos...");        //TODO(gb): Remove trace!!!
 
                 console.log("Agregando puntos a los polígonos...");        //TODO(gb): Remove trace!!!
-                if (typeObj.getPolygonName) {
-                    for (var i=0; i<rows.length; i++) {
-                        self.addToPolygon(type, typeObj.getPolygonName(rows[i]));
-                    }
-                } else {
-                    for (var i=0; i<rows.length; i++) {
-                        var row = rows[i];
-                        self.addToCorrespondingPolygon(type, typeObj.getCoordinates(row));
-                    }
+                for (var i=0; i<rows.length; i++) {
+                    self.addToPolygon(type, typeObj.getPolygonName(rows[i]));
                 }
 
                 console.log("Renderizando los polígonos");        //TODO(gb): Remove trace!!!
@@ -199,7 +192,7 @@ var MapManager = function MapManager(options) {
             var polygon = self.polygons[i];
             var opacity = polygon[type].log / self.types[type].maxLog;
             polygon.polygon.setOptions({
-                fillOpacity: opacity
+                fillColor : self._computeRGBColorModel(opacity*100)
             });
             if (!polygon.polygon.map)
                 polygon.polygon.setMap(self.map);
