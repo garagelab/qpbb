@@ -22,14 +22,16 @@ var MapManager = function MapManager(options) {
         salud : {
             minLog : 0, maxLog : 0,
             ftClient : null,
-            ftId : "1BNXWW11eP7gH-SSo_YNhg1qth1PoKX8HwhfxFJ0",
-            columnArray : ["Latitude", "Longitude"],
+            ftId : "1ngNauuZa6pB23RfA2HC5O5EUpOIeqbElspdBV-g",
+            columnArray : ["Latitude", "Longitude", "Poligono"],
             whereClause : "Latitude NOT EQUAL TO '' AND Longitude NOT EQUAL TO ''",
             orderClause : null,
             getCoordinates : function(row) {
                 return [row[0], row[1]];
             },
-            getPolygonName : null
+            getPolygonName : function(row) {
+                return row[2];
+            }
         }
     };
 
