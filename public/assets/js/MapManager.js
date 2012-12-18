@@ -8,7 +8,7 @@ var MapManager = function MapManager(options) {
         denuncias : {
             minLog : 0, maxLog : 0,
             ftClient : null,
-            ftId : "1shWmb-II63atGM0jcTv8rI6IVrgyunbwWpfUzz8",
+            ftId : "1OoePLj4nJ-QNJRi_s3NhkpX7pz0plYT-w7gENOY",
             columnArray : ["GEO", "Poligono"],
             whereClause : "GEO NOT EQUAL TO ''",
             orderClause : null,
