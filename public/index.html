@@ -103,7 +103,7 @@
                         strokeColor: "#000000",
                         strokeOpacity: 0.5,
                         fillColor: "#999999",
-                        fillOpacity: 1,
+                        fillOpacity: 0.8,
                         zIndex: 2
                     });
                 }
@@ -121,6 +121,12 @@
                         zIndex: 3
                     });
                 }
+            });
+
+            // Medidor de aire
+            mapManager.addToMarkerLayer("aire", "-38.757221,-62.281698", {
+                icon: '/assets/img/meter.png',
+                zIndex: 4
             });
 
             // App
