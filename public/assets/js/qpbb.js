@@ -1,6 +1,7 @@
-var Qpbb = function Qpbb(mapManager) {
+var Qpbb = function Qpbb(mapManager, aqi) {
 
     this.mapManager = mapManager;
+    this.aqi = aqi;
 
     this.init = function() {
         this.initControls();
@@ -50,6 +51,8 @@ var Qpbb = function Qpbb(mapManager) {
                                 $('#aqi-view')
                                     .fadeIn('fast')
                                     .addClass('current');
+                                if (!self.aqi.loaded)
+                                    self.aqi.init();
                             })
                     }
                 }
