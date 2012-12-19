@@ -135,7 +135,7 @@ var MapManager = function MapManager(options) {
         currentLayer.polygons.push(polygon);
     }
 
-    this.addToMarkerLayer = function(layerName, coordinates, customOptions) {
+    this.addToMarkerLayer = function(layerName, coordinates, customOptions, circleCustomOptions) {
         var self = this;
 
         var layer = self.markerLayers.filter(function(layer) {
@@ -155,13 +155,28 @@ var MapManager = function MapManager(options) {
         }
 
         var markerOptions = {
-            position: new google.maps.LatLng(coordinates.split(",")[0], coordinates.split(",")[1]),
+            position: new google.maps.LatLng(coordinates.split(",")[0], coordinates.split(",")[1])
         };
         $.extend(markerOptions, customOptions);
 
         var marker = new google.maps.Marker(markerOptions);
         marker.setMap(self.map);
         currentLayer.markers.push(marker);
+
+        if (circleCustomOptions) {
+            var circleOptions = {
+                center: new google.maps.LatLng(coordinates.split(",")[0], coordinates.split(",")[1]),
+                radius: 1000,
+                strokeColor: "#333333",
+                strokeOpacity: 0.5,
+                strokeWeight: 1,
+                fillColor: "#FF0000",
+                fillOpacity: 0.5
+            };
+            $.extend(circleOptions, circleCustomOptions);
+            var circle = new google.maps.Circle(circleOptions);
+            circle.setMap(self.map)
+        }
     }
 
     this.addPolygon = function(name, coordinates, area) {

@@ -92,6 +92,16 @@
                 mapManager.setMapType(type);
             });
 
+            // Medidor de aire
+            mapManager.addToMarkerLayer("aire", "-38.757221,-62.281698", {
+                icon: '/assets/img/meter.png',
+                zIndex: 2
+            }, {
+                radius: 4000,
+                zIndex:2,
+                fillColor: 'steelblue'
+            });
+
             // Layer de empresas
             empresasFT = new FTClient("1R1pVgXnt7aCYNK7r2UJVnOrDZ5-vFaJlj8XToZw");
             empresasFT.query(["geometry"], null, null, function(data) {
@@ -104,7 +114,7 @@
                         strokeOpacity: 0.5,
                         fillColor: "#999999",
                         fillOpacity: 0.8,
-                        zIndex: 2
+                        zIndex: 3
                     });
                 }
             });
@@ -118,15 +128,9 @@
                     var row = rows[i];
                     mapManager.addToMarkerLayer("plantas", row[0], {
                         icon: '/assets/img/industry.png',
-                        zIndex: 3
-                    });
+                        zIndex: 4
+                    }, null);
                 }
-            });
-
-            // Medidor de aire
-            mapManager.addToMarkerLayer("aire", "-38.757221,-62.281698", {
-                icon: '/assets/img/meter.png',
-                zIndex: 4
             });
 
             // App
