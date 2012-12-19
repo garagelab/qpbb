@@ -57,7 +57,7 @@
 
     <script>
         var mapManager;
-        var radiosFT, empresasFT;
+        var radiosFT, empresasFT, plantasFT;
 
         $(window).load(function () {
             // Mapa
@@ -78,7 +78,7 @@
                 }
             });
 
-            // Radios censales
+            // Poligonos de radios censales (Denuncias y Salud)
             radiosFT = new FTClient("1Oc--K4VExbbFppPSm8gG-7GtheahmEPH3ZeKT1I");
             radiosFT.query(["name", "geometry", "SHAPE_AREA"], null, null, function(data) {
                 var rows = data.table.rows;
@@ -99,36 +99,33 @@
 
                 for (var i=0; i<rows.length; i++) {
                     var row = rows[i];
-                    mapManager.addToPolygonLayer("empresas", row[0].coordinates[0]);
+                    mapManager.addToPolygonLayer("empresas", row[0].coordinates[0], {
+                        strokeColor: "#000000",
+                        strokeOpacity: 0.5,
+                        fillColor: "#999999",
+                        fillOpacity: 1,
+                        zIndex: 2
+                    });
+                }
+            });
+
+            // Layers de plantas
+            plantasFT = new FTClient("1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0");
+            plantasFT.query(["posicion"], null, null, function(data) {
+                var rows = data.table.rows;
+
+                for (var i=0; i<rows.length; i++) {
+                    var row = rows[i];
+                    mapManager.addToMarkerLayer("plantas", row[0], {
+                        icon: '/assets/img/industry.png',
+                        zIndex: 3
+                    });
                 }
             });
 
             // App
             var qpbb = new Qpbb(mapManager);
             qpbb.init();
-        });
-
-        $(window).load(function () {
-            // Mapa
-//            mapManager = new MapManager({
-//                mapDivId : "map-canvas",
-//                mapCenter : {lat: -38.7214, lng: -62.258908},
-//                googleMapsOptions: {
-//                    zoom : 12,
-//                    mapTypeId : google.maps.MapTypeId.ROADMAP
-//                }
-//            });
-
-
-
-            // Layers de plantas
-//            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", "infoWindowTemplatePlanta", false, {});
-
-            // Layer de denuncias
-//            mapManager.addFTLayer("denuncias", "1UUkMV28J2E4Z-EwXMdhd9tCKQMicjWNpekYpJBY", "GEO", "infoWindowTemplateDenuncia", true, {});
-
-            // Layer del 0800
-//            mapManager.addFTLayer("0800", "18HFRQfoJHjyRvd2BeUeK8G4UauJh8pNFgByan5s", "LatLong", null, true, {});
         });
     </script>
 </head>

@@ -4,6 +4,7 @@ var MapManager = function MapManager(options) {
     this.map = null;
     this.layers = [];
     this.polygonLayers = [];
+    this.markerLayers = [];
     this.polygons = [];
     this.types = {
         denuncias : {
@@ -100,7 +101,7 @@ var MapManager = function MapManager(options) {
         layer[0].layer.setMap(null);
     }
 
-    this.addToPolygonLayer = function(layerName, coordinates) {
+    this.addToPolygonLayer = function(layerName, coordinates, customOptions) {
         var self = this;
 
         var layer = self.polygonLayers.filter(function(layer) {
@@ -119,17 +120,48 @@ var MapManager = function MapManager(options) {
             currentLayer = layer[0];
         }
 
-        var polygon = new google.maps.Polygon({
+        var polygonOptions = {
             paths: self._coordinatesToLatLng(coordinates),
             strokeColor: "#333333",
             strokeOpacity: 0.5,
             strokeWeight: 1,
-            fillColor: "#333333",
-            fillOpacity: 1,
-            zIndex: 2
-        });
+            fillColor: "#FF0000",
+            fillOpacity: 0.5
+        };
+        $.extend(polygonOptions, customOptions);
+
+        var polygon = new google.maps.Polygon(polygonOptions);
         polygon.setMap(self.map);
         currentLayer.polygons.push(polygon);
+    }
+
+    this.addToMarkerLayer = function(layerName, coordinates, customOptions) {
+        var self = this;
+
+        var layer = self.markerLayers.filter(function(layer) {
+            return layer.name == layerName;
+        });
+
+        var currentLayer;
+
+        if (layer.length == 0) {
+            currentLayer = {
+                name: layerName,
+                markers: []
+            };
+            self.markerLayers.push(currentLayer);
+        } else {
+            currentLayer = layer[0];
+        }
+
+        var markerOptions = {
+            position: new google.maps.LatLng(coordinates.split(",")[0], coordinates.split(",")[1]),
+        };
+        $.extend(markerOptions, customOptions);
+
+        var marker = new google.maps.Marker(markerOptions);
+        marker.setMap(self.map);
+        currentLayer.markers.push(marker);
     }
 
     this.addPolygon = function(name, coordinates, area) {
