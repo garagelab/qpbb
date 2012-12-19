@@ -97,7 +97,8 @@
             }, {
                 radius: 4000,
                 zIndex:2,
-                fillColor: 'steelblue'
+                fillColor: 'steelblue',
+                fillOpacity: 0.3
             });
 
             // Layer de empresas
@@ -187,7 +188,7 @@
         </ul>
 
     </div>
-    <div class="row">
+    <div class="row view current" id="map-view">
         <div class="span2">
             <div id="filter">
                 <h6>Filtro</h6>
@@ -217,6 +218,11 @@
         </div>
         <div class="span10">
             <div id="map-canvas"></div>
+        </div>
+    </div>
+    <div class="row view" id="aqi-view" style="display: none">
+        <div class="span12">
+            <h2>AQI</h2>
         </div>
     </div>
     <hr/>
