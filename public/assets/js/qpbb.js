@@ -9,9 +9,9 @@ var Qpbb = function Qpbb(mapManager) {
     this.initControls = function() {
         var self = this;
         $('.menuItems a').click(function(event) {
-            if (!$(this).find("li").hasClass("current")) {
+            if (!$(this).parent().hasClass("current")) {
                 $('.menuItems').find("li.current").removeClass('current');
-                $(this).find("li").addClass("current");
+                $(this).parent().addClass("current");
 
                 var section = $(this).attr("data-section");
                 if (section == "salud") {
@@ -20,8 +20,6 @@ var Qpbb = function Qpbb(mapManager) {
                     self.mapManager.setMapType("denuncias");
                 }
             }
-
-
 
             event.preventDefault();
         })

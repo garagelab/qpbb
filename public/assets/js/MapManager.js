@@ -203,8 +203,6 @@ var MapManager = function MapManager(options) {
 
     this.setMapType = function(type) {
         var self = this;
-        console.log("Setting map '" + type + "'");        //TODO(gb): Remove trace!!!
-
         var typeObj = self.types[type];
 
         if (!typeObj.ftClient) {
@@ -212,22 +210,13 @@ var MapManager = function MapManager(options) {
             typeObj.ftClient = ftClient;
             typeObj.ftClient.query(typeObj.columnArray, typeObj.whereClause, typeObj.orderClause, function(data) {
                 var rows = data.table.rows;
-                console.log("Se encontraron " + rows.length + " puntos...");        //TODO(gb): Remove trace!!!
-
-                console.log("Agregando puntos a los polígonos...");        //TODO(gb): Remove trace!!!
                 for (var i=0; i<rows.length; i++) {
                     self.addToPolygon(type, typeObj.getPolygonName(rows[i]));
                 }
-
-                console.log("Renderizando los polígonos");        //TODO(gb): Remove trace!!!
                 self.renderPolygons(type);
-                console.log("Mapa listo.\n");        //TODO(gb): Remove trace!!!
-
             });
         } else {
-            console.log("Renderizando los polígonos");        //TODO(gb): Remove trace!!!
             self.renderPolygons(type);
-            console.log("Mapa listo.\n");        //TODO(gb): Remove trace!!!
         }
 
     };
