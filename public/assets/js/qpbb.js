@@ -8,11 +8,22 @@ var Qpbb = function Qpbb(mapManager) {
 
     this.initControls = function() {
         var self = this;
+        $('.menuItems a').click(function(event) {
+            if (!$(this).find("li").hasClass("current")) {
+                $('.menuItems').find("li.current").removeClass('current');
+                $(this).find("li").addClass("current");
 
-        // Tipo de mapa
-        $("#mapType").change(function(event, ui) {
-            var type = $(this).val();
-            self.mapManager.setMapType(type);
-        });
+                var section = $(this).attr("data-section");
+                if (section == "salud") {
+                    self.mapManager.setMapType("salud");
+                } else if (section == "denuncias") {
+                    self.mapManager.setMapType("denuncias");
+                }
+            }
+
+
+
+            event.preventDefault();
+        })
     };
 }

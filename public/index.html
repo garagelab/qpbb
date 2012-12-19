@@ -87,9 +87,7 @@
                     var row = rows[i];
                     mapManager.addPolygon(row[0], row[1].coordinates[0], row[2]);
                 }
-
-                var type = $("#mapType").val();
-                mapManager.setMapType(type);
+                mapManager.setMapType("denuncias");
             });
 
             // Medidor de aire
@@ -148,11 +146,44 @@
     </div>
     <hr>
 
-    <div class="">
+    <div>
         <p class="lead" style="font-size: 20px;">Convertimos datos técnicos del municipio en información accesible y la integramos con reportes de vecinos sobre los problemas de la ciudad, el Polo Petroquímico y el Puerto.</p>
         <p>La plataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
     </div>
     <hr/>
+    <div class="navigation">
+        <ul class="menuItems unstyled">
+            <a href="#" data-section="denuncias">
+                <li class="current">
+                    <div class="section">
+                        <h4>Denuncias</h4>
+                        <p class="description">Denuncias realizadas al CTE</p>
+                    </div>
+                    <div class="arrow-down"></div>
+                </li>
+            </a>
+
+            <a href="#" data-section="salud">
+                <li>
+                    <div class="section">
+                        <h4>Salud</h4>
+                        <p class="description">Consultas de salud</p>
+                    </div>
+                    <div class="arrow-down"></div>
+                </li>
+            </a>
+            <a href="#" data-section="aire">
+                <li>
+                    <div class="section">
+                        <h4>Aire</h4>
+                        <p class="description">Mediciones de calidad de aire</p>
+                    </div>
+                    <div class="arrow-down"></div>
+                </li>
+            </a>
+        </ul>
+
+    </div>
     <div class="row">
         <div class="span2">
             <div id="filter">
@@ -160,7 +191,7 @@
                 <ul class="unstyled">
                     <li>
                         <a href="#">
-                        <i class="icon-check"></i> Empresas del polo petroquímico
+                            <i class="icon-check"></i> Empresas del polo petroquímico
                         </a>
                     </li>
                     <li>
@@ -182,18 +213,6 @@
             </div>
         </div>
         <div class="span10">
-            <div class="well well-small">
-                <form class="form-inline" style="margin-bottom: 0px;">
-                    <fieldset>
-                        <label>Seleccione la vista </label>
-                        <select id="mapType" class="input-medium">
-                            <option value="denuncias">Denuncias CTE</option>
-                            <option value="salud">Salud</option>
-                        </select>
-                    </fieldset>
-                </form>
-            </div>
-
             <div id="map-canvas"></div>
         </div>
     </div>
