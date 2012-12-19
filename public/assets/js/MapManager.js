@@ -3,6 +3,7 @@ var MapManager = function MapManager(options) {
     this.options = options;
     this.map = null;
     this.layers = [];
+    this.polygonLayers = [];
     this.polygons = [];
     this.types = {
         denuncias : {
@@ -99,6 +100,38 @@ var MapManager = function MapManager(options) {
         layer[0].layer.setMap(null);
     }
 
+    this.addToPolygonLayer = function(layerName, coordinates) {
+        var self = this;
+
+        var layer = self.polygonLayers.filter(function(layer) {
+            return layer.name == layerName;
+        });
+
+        var currentLayer;
+
+        if (layer.length == 0) {
+            currentLayer = {
+                name: layerName,
+                polygons: []
+            };
+            self.polygonLayers.push(currentLayer);
+        } else {
+            currentLayer = layer[0];
+        }
+
+        var polygon = new google.maps.Polygon({
+            paths: self._coordinatesToLatLng(coordinates),
+            strokeColor: "#333333",
+            strokeOpacity: 0.5,
+            strokeWeight: 1,
+            fillColor: "#333333",
+            fillOpacity: 1,
+            zIndex: 2
+        });
+        polygon.setMap(self.map);
+        currentLayer.polygons.push(polygon);
+    }
+
     this.addPolygon = function(name, coordinates, area) {
         var self = this;
 
@@ -108,7 +141,8 @@ var MapManager = function MapManager(options) {
             strokeOpacity: 0.5,
             strokeWeight: 1,
             fillColor: "#FF0000",
-            fillOpacity: 0.5
+            fillOpacity: 0.5,
+            zIndex: 1
         });
 
         self.polygons.push({

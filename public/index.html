@@ -57,7 +57,7 @@
 
     <script>
         var mapManager;
-        var radiosFT;
+        var radiosFT, empresasFT;
 
         $(window).load(function () {
             // Mapa
@@ -78,6 +78,7 @@
                 }
             });
 
+            // Radios censales
             radiosFT = new FTClient("1Oc--K4VExbbFppPSm8gG-7GtheahmEPH3ZeKT1I");
             radiosFT.query(["name", "geometry", "SHAPE_AREA"], null, null, function(data) {
                 var rows = data.table.rows;
@@ -89,6 +90,17 @@
 
                 var type = $("#mapType").val();
                 mapManager.setMapType(type);
+            });
+
+            // Layer de empresas
+            empresasFT = new FTClient("1R1pVgXnt7aCYNK7r2UJVnOrDZ5-vFaJlj8XToZw");
+            empresasFT.query(["geometry"], null, null, function(data) {
+                var rows = data.table.rows;
+
+                for (var i=0; i<rows.length; i++) {
+                    var row = rows[i];
+                    mapManager.addToPolygonLayer("empresas", row[0].coordinates[0]);
+                }
             });
 
             // App
@@ -107,14 +119,7 @@
 //                }
 //            });
 
-            // Layer de empresas
-//            mapManager.addFTLayer("empresas", "1R1pVgXnt7aCYNK7r2UJVnOrDZ5-vFaJlj8XToZw", "geometry", "infoWindowTemplateEmpresa", false, {
-//                styles: [{
-//                    polygonOptions: {
-//                        fillColor: "#333333"
-//                    }
-//                }]
-//            });
+
 
             // Layers de plantas
 //            mapManager.addFTLayer("plantas", "1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0", "posicion", "infoWindowTemplatePlanta", false, {});

@@ -24,7 +24,8 @@ var Qpbb = function Qpbb(mapManager) {
                 $("#date-to").text($.datepicker.formatDate('dd/mm/yy', new Date(ui.values[1] * 1000)));
             },
             change: function(event, ui) {
-                mapManager.filterMap(new Date(ui.values[0] * 1000), new Date(ui.values[1] * 1000));
+                console.log("slider change");        //TODO(gb): Remove trace!!!
+//                mapManager.filterMap(new Date(ui.values[0] * 1000), new Date(ui.values[1] * 1000));
             }
         });
         var date0 = new Date($( "#time-slider" ).slider( "values", 0 ) * 1000);
