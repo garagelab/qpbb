@@ -206,6 +206,7 @@ var MapManager = function MapManager(options) {
         var typeObj = self.types[type];
 
         if (!typeObj.ftClient) {
+            self.clearPolygons();
             var ftClient = new FTClient(typeObj.ftId);
             typeObj.ftClient = ftClient;
             typeObj.ftClient.query(typeObj.columnArray, typeObj.whereClause, typeObj.orderClause, function(data) {
@@ -262,10 +263,22 @@ var MapManager = function MapManager(options) {
             var polygon = self.polygons[i];
             var opacity = polygon[type].log / self.types[type].maxLog;
             polygon.polygon.setOptions({
-                fillColor : self._computeRGBColorModel(opacity*100)
+                fillColor : self._computeRGBColorModel(opacity*100),
+                fillOpacity: 0.5
             });
             if (!polygon.polygon.map)
                 polygon.polygon.setMap(self.map);
+        }
+    };
+
+    this.clearPolygons = function() {
+        var self = this;
+
+        for (var i=0; i<self.polygons.length; i++) {
+            var polygon = self.polygons[i];
+            polygon.polygon.setOptions({
+                fillOpacity: 0
+            });
         }
     };
 

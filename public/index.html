@@ -9,7 +9,10 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap/jquery-ui-1.8.16.custom.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome-ie7.css">
+
     <link rel="stylesheet/less" type="text/css" href="/assets/css/style.less">
+
+    <link rel="stylesheet/less" type="text/css" href="/assets/css/bootstrap-responsive.css">
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -20,41 +23,10 @@
     <script src="/assets/js/less-1.3.1.min.js"></script>
     <script src="/assets/js/d3.v3.min_es.js"></script>
 
-    <!--Templates-->
-    <script id="infoWindowTemplateEmpresa" type="text/x-jquery-tmpl">
-        <div class='googft-info-window' style='font-family: sans-serif'>
-            <h5>${name.value}.</h5> </br>
-            <b>Descripci&oacute;n:</b> ${Descripcion.value}.</br>
-            <b>Sustancias y productos:</b> ${Sustancias_y_productos.value}. </br></br>
-            <b>Contaminantes primarios</b></br>
-            <b>&Oacute;xidos de Nitr&oacute;geno NOx (tn/a&ntilde;o):</b> ${NOx.value}.</br>
-            <b>Mon&oacute;xido de Carbono CO (tn/a&ntilde;o):</b> ${CO.value}.</br>
-            <b>&Oacute;xidos de azufre SOx (tn/a&ntilde;o):</b> ${SOx.value}.</br>
-            <b>Material Particulado MP (tn/a&ntilde;o):</b> ${MP.value}.</br></br>
-            <a href='${link_referencia.value}'  target="_blank">Link de referencia</a>
-        </div>
-    </script>
-    <script id="infoWindowTemplatePlanta" type="text/x-jquery-tmpl">
-        <div class='googft-info-window' style='font-family: sans-serif'>
-            <h5>${nombre.value}.</h5> </br>
-            <b>Direcci&oacute;n:</b> ${direccion.value}.</br>
-            <b>Tel&eacute;fono:</b> ${telefono.value}.</br>
-            <b>Fecha de registro:</b> ${dhRegistro.value}. </br>
-            <b>Acta:</b>${NombreActa.value}.</br>
-        </div>
-    </script>
-    <script id="infoWindowTemplateDenuncia" type="text/x-jquery-tmpl">
-        <div class='googft-info-window' style='font-family: sans-serif'>
-            <b>Origen de la denuncia:</b> ${Origen.value}. </br>
-            ${Fecha.value} - ${Hora.value}</br>
-            <b>Direcci&oacute;n:</b> ${Direccion.value}. </br>
-            <b>Detalle de la denuncia:</b></br>
-            ${Descripcion.value}</br>
-            <b>Informe:</b></br>
-            ${Informe.value}
-
-        </div>
-    </script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
     <script>
         var mapManager;
@@ -145,94 +117,158 @@
 
 <body>
 
-<div class="container">
-    <div class="masthead">
-        <h2>qpbb <small>¿Qué pasa, Bahía Blanca?</small></h2>
-    </div>
-    <hr>
 
-    <div>
-        <p class="lead" style="font-size: 20px;">Convertimos datos técnicos del municipio en información accesible y la integramos con reportes de vecinos sobre los problemas de la ciudad, el Polo Petroquímico y el Puerto.</p>
-        <p>La plataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
-    </div>
-    <hr/>
-    <div class="navigation">
-        <ul class="menuItems unstyled">
+<!-- Part 1: Wrap all page content here -->
+<div id="wrap">
 
-            <li class="current">
-                <a href="#" data-section="denuncias">
-                    <div class="section">
-                        <h4>Denuncias</h4>
-                        <p class="description">Denuncias realizadas al CTE</p>
+    <!-- Begin page content -->
+    <div class="container">
+
+        <div class="page-header">
+            <h1>qpbb <small>¿Que pasa, Bahía Blanca?</small></h1>
+        </div>
+
+        <p class="lead" style="text-align:justify;">Convertimos datos municipales técnicos y no técnicos sobre salud y ambiente en información accesible y precisa para aumentar la visibilidad de los problemas de la ciudad, el Polo Petroquímico y el Puerto.</p>
+        <p>Esta plataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
+
+
+
+
+        <hr>
+
+        <div class="tabbable tabs-left">
+            <ul id="navigation" class="nav nav-tabs">
+                <li class="active">
+                    <a href="#denuncias" data-toggle="tab" data-section="denuncias">
+                        <strong>Denuncias</strong><br>
+                        <small class="muted">Denuncias realizadas al CTE</small>
+                    </a>
+                </li>
+                <li>
+                    <a href="#salud" data-toggle="tab" data-section="salud">
+                        <strong>Salud</strong><br>
+                        <small class="muted">Consultas de salud</small>
+                    </a>
+                </li>
+                <li>
+                    <a href="#aire" data-toggle="tab" data-section="aire">
+                        <strong>Aire</strong><br>
+                        <small class="muted">Mediciones de calidad de aire</small>
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active fade in" id="denuncias">
+                    <div class="row-fluid">
+                        <div class="denuncias span12">
+                            <div class="">
+                                <h3>¿Qué dicen los vecinos?</h3>
+                                <p>Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa.</p>
+                            </div>
+                            <hr>
+                            <div class="well clearfix">
+                                <h6>Filtros</h6>
+                                <div class="map_filters btn-group">
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="empresas-del-polo"> Empresas del polo petroquímico
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="plantas-del-polo"> Plantas del polo petroquímico
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="medidor-de-aire"> Medidor de aire
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="agua"> Agua
+                                        </label>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="map-canvas"></div>
+                        </div>
                     </div>
-                    <div class="arrow"></div>
-                </a>
-            </li>
+                </div>
 
-            <li>
-                <a href="#" data-section="salud">
-                    <div class="section">
-                        <h4>Salud</h4>
-                        <p class="description">Consultas de salud</p>
+                <div class="tab-pane fade" id="salud">
+                    <div class="row-fluid">
+                        <div class="salud span12">
+                            <div class="">
+                                <h3>¿Qué pasa con la salud?</h3>
+                                <p>De las visitas a los centros de salud durante el 2012, más del 17% corresponden a problemas relacionados con las vías respiratorias. Los diagnósticos más significativos fueron dolor abdominal y pélvico, diarrea y gastroenteritis, bronquitis y bronqueolitis.</p>
+                            </div>
+                            <hr>
+                            <div class="well clearfix">
+                                <h6>Filtros</h6>
+                                <div class="map_filters btn-group">
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="empresas-del-polo"> Empresas del polo petroquímico
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="plantas-del-polo"> Plantas del polo petroquímico
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="medidor-de-aire"> Medidor de aire
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="agua"> Agua
+                                        </label>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="arrow"></div>
-                </a>
-            </li>
+                </div>
 
-            <li>
-                <a href="#" data-section="aire">
-                    <div class="section">
-                        <h4>Aire</h4>
-                        <p class="description">Mediciones de calidad de aire</p>
+                <div class="tab-pane fade" id="aire">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="">
+                                <h3>¿Qué pasa con el aire?</h3>
+                                <p>Los valores de medición del aire son tomados por el único sensor que posee el CTE y que tiene un radio de alcance de 4 km y que se encuentra en el Parque Industrial de Bahía Blanca.</p>
+
+                                <p>Hemos confeccionado un gráfico basado en las mediciones de tal tal tal y según la normativa de Calidad de Aire de EPA (Air Quality Index de Environmental Protection Agency), que toma estos contaminantes y considera el más “grave”, y que cuenta con una gradación que va desde “cualidad del aire buena” hasta “peligrosa”.</p>
+
+                                <p>Desde el año 2009, se registraron 993 hs, equivalente a 41 días, en los cuales los índices de calidad de aire excedieron los niveles admitidos. De ese registro, 789 hs equivalente a 32 días, fue peligroso para grupos en situación de riesgo. Durante 178 hs, equivalente a 7 días, fue insalubre, durante 14 hs muy insalubre, y durante 20 hs, peligroso. Se registraron 975 hs donde el índice de Material Particulado PM10 fue mayor al aceptado por la norma. Se registraron niveles mayores a los admisibles de Monóxido de Carbono durante 10 hs y de Ozono por 8hs.</p>
+                            </div>
+                            <br>
+
+                            <div id="canvas"></div>
+
+                        </div>
                     </div>
-                    <div class="arrow"></div>
-                </a>
-            </li>
+                </div>
 
-        </ul>
-
-    </div>
-    <div class="row view current" id="map-view">
-        <div class="span2">
-            <div id="filter">
-                <h6>Filtro</h6>
-                <ul class="unstyled">
-                    <li>
-                        <a href="#">
-                            <i class="icon-check"></i> Empresas del polo petroquímico
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-check"></i> Plantas del polo petroquímico
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-check"></i> Medidor de Aire
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="icon-check"></i> Agua
-                        </a>
-                    </li>
-                </ul>
             </div>
-        </div>
-        <div class="span10">
-            <div id="map-canvas"></div>
+
         </div>
     </div>
-    <div class="row view" id="aqi-view" style="display: none">
-        <div class="span12">
-            <div id="canvas"></div>
-        </div>
-    </div>
-    <hr/>
+
+    <br>
+
+    <div id="push"></div>
 </div>
 
-
+<div id="footer">
+    <div class="container">
+        <p class="muted credit">Desarrollado por <a href="http://garagelab.cc" target="_blank">Garagelab</a></p>
+    </div>
+</div>
 
 <!--JS Scripts-->
 <script type="text/javascript">
@@ -253,6 +289,11 @@
                         mapManager.hideLayer($(this).attr("data-tableKey"));
                     }
                 });
+
+        $('.map_filters input').change(function(){
+            alert("Filtro: "+$(this).attr('name')+" - Estado: "+$(this).prop('checked'));
+        });
+
     });
 </script>
 
@@ -260,6 +301,5 @@
 <script src="/assets/js/FTClient.js"></script>
 <script src="/assets/js/qpbb.js"></script>
 <script src="/assets/js/aqi.js"></script>
-
 </body>
 </html>
