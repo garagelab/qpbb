@@ -1,64 +1,28 @@
-var Qpbb = function Qpbb(mapManager, aqi) {
+  var Qpbb = function Qpbb(mapManager, aqi) {
 
-    this.mapManager = mapManager;
-    this.aqi = aqi;
+  this.mapManager = mapManager;
+  this.aqi = aqi;
 
-    this.init = function() {
-        this.initControls();
-    };
+  this.init = function() {
+      this.initControls();
+  };
 
-    this.initControls = function() {
-        var self = this;
-        $('.menuItems a').click(function(event) {
-            if (!$(this).parent().hasClass("current")) {
-                $('.menuItems').find("li.current").removeClass('current');
-                $(this).parent().addClass("current");
+  this.initControls = function() {
 
-                var section = $(this).attr("data-section");
-                var currentView = $(".view.current");
+      var self = this;
 
-                if (section == "salud") {
-                    if(!$('#map-view').hasClass("current")) {
-                        currentView
-                            .removeClass('current')
-                            .fadeOut('fast', function() {
-                                $('#map-view')
-                                    .fadeIn('fast')
-                                    .addClass('current');
-                                self.mapManager.setMapType("salud");
-                            })
-                    } else {
-                        self.mapManager.setMapType("salud");
-                    }
-                } else if (section == "denuncias") {
-                    if(!$('#map-view').hasClass("current")) {
-                        currentView
-                            .removeClass('current')
-                            .fadeOut('fast', function() {
-                                $('#map-view')
-                                    .fadeIn('fast')
-                                    .addClass('current');
-                                self.mapManager.setMapType("denuncias");
-                            })
-                    } else {
-                        self.mapManager.setMapType("denuncias");
-                    }
-                } else if (section == "aire") {
-                    if(!$('#aqi-view').hasClass("current")) {
-                        currentView
-                            .removeClass('current')
-                            .fadeOut('fast', function() {
-                                $('#aqi-view')
-                                    .fadeIn('fast')
-                                    .addClass('current');
-                                if (!self.aqi.loaded)
-                                    self.aqi.init();
-                            })
-                    }
-                }
-            }
+      $('#navigation li a').click(function(e) {
+        var section = $(this).attr("data-section");
+        if ((section == "aire" ) && (!self.aqi.loaded)) {
+          self.aqi.init();
+        } else {
+          self.mapManager.setMapType(section);
+        }   
+        e.preventDefault();
+      });
 
-            event.preventDefault();
-        })
-    };
+
+      
+
+  };
 }
