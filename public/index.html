@@ -137,7 +137,7 @@
         <hr>
 
         <div class="tabbable tabs-left">
-            <ul id="navigation" class="nav nav-tabs">
+            <ul id="navigation" class="nav nav-tabs" style="min-height: 772px">
                 <li class="active">
                     <a href="#denuncias" data-toggle="tab" data-section="denuncias">
                         <strong>Denuncias</strong><br>
@@ -173,22 +173,21 @@
                                 <p>Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa.</p>
                             </div>
                             <hr>
-                            <div class="well clearfix">
-                                <h6>Filtros</h6>
+                            <div class="clearfix">
                                 <div class="map_filters btn-group">
                                     <button class="btn btn-primary">
                                         <label class="checkbox">
-                                            <input type="checkbox" name="empresas-del-polo"> Empresas del polo petroquímico
+                                            <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del polo petroquímico
                                         </label>
                                     </button>
                                     <button class="btn btn-primary">
                                         <label class="checkbox">
-                                            <input type="checkbox" name="plantas-del-polo"> Plantas del polo petroquímico
+                                            <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del polo petroquímico
                                         </label>
                                     </button>
                                     <button class="btn btn-primary">
                                         <label class="checkbox">
-                                            <input type="checkbox" name="medidor-de-aire"> Medidor de aire
+                                            <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
                                         </label>
                                     </button>
                                     <button class="btn btn-primary">
@@ -211,30 +210,27 @@
                                 <p>De las visitas a los centros de salud durante el 2012, más del 17% corresponden a problemas relacionados con las vías respiratorias. Los diagnósticos más significativos fueron dolor abdominal y pélvico, diarrea y gastroenteritis, bronquitis y bronqueolitis.</p>
                             </div>
                             <hr>
-                            <div class="well clearfix">
-                                <h6>Filtros</h6>
-                                <div class="map_filters btn-group">
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="empresas-del-polo"> Empresas del polo petroquímico
-                                        </label>
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="plantas-del-polo"> Plantas del polo petroquímico
-                                        </label>
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="medidor-de-aire"> Medidor de aire
-                                        </label>
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="agua"> Agua
-                                        </label>
-                                    </button>
-                                </div>
+                            <div class="map_filters btn-group">
+                                <button class="btn btn-primary">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del polo petroquímico
+                                    </label>
+                                </button>
+                                <button class="btn btn-primary">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del polo petroquímico
+                                    </label>
+                                </button>
+                                <button class="btn btn-primary">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
+                                    </label>
+                                </button>
+                                <button class="btn btn-primary">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="agua"> Agua
+                                    </label>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -312,25 +308,10 @@
 <!--JS Scripts-->
 <script type="text/javascript">
     $(function(){
-        // Filter
-        $('.popoverItem')
-                .hover(function(){
-                    $(this).popover('show');
-                }, function(){
-                    $(this).popover('hide');
-                })
-                .click(function() {
-                    if ($(this).find("i").hasClass("icon-check-empty")) {
-                        $(this).find("i").removeClass("icon-check-empty").addClass("icon-check");
-                        mapManager.showLayer($(this).attr("data-tableKey"));
-                    } else {
-                        $(this).find("i").removeClass("icon-check").addClass("icon-check-empty");
-                        mapManager.hideLayer($(this).attr("data-tableKey"));
-                    }
-                });
-
         $('.map_filters input').change(function(){
-            alert("Filtro: "+$(this).attr('name')+" - Estado: "+$(this).prop('checked'));
+            var show = $(this).prop('checked');
+            var layer = $(this).attr('data-layer');
+            mapManager.toggleLayerVisibility(layer, show);
         });
 
     });

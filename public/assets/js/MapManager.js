@@ -2,7 +2,7 @@ var MapManager = function MapManager(options) {
 
     this.options = options;
     this.map = null;
-    this.layers = [];
+    this.ftLayers = [];
     this.polygonLayers = [];
     this.markerLayers = [];
     this.polygons = [];
@@ -68,13 +68,13 @@ var MapManager = function MapManager(options) {
             });
         }
 
-        self.layers.push({key:key, layer:layer, filterable:filterable});
+        self.ftLayers.push({key:key, layer:layer, filterable:filterable});
     }
 
     this.filterMap = function(from, to) {
         var self = this;
 
-        var layers = self.layers.filter(function(layer) {
+        var layers = self.ftLayers.filter(function(layer) {
             return layer.filterable;
         });
 
@@ -87,15 +87,46 @@ var MapManager = function MapManager(options) {
         }
     }
 
+    this.toggleLayerVisibility = function(name, show) {
+        var self = this;
+
+        var layer = $.merge($.merge([], this.polygonLayers), this.markerLayers)
+            .filter(function(layer) {
+                return layer.name == name;
+            })[0];
+
+        if (!layer) {
+            return;
+        }
+
+        if (layer.polygons) {
+            layer.polygons.map(function(polygon) {
+                polygon.setMap(show ? self.map : null);
+            })
+        }
+
+        if (layer.markers) {
+            layer.markers.map(function(marker) {
+                marker.setMap(show ? self.map : null);
+            })
+        }
+
+        if (layer.circles) {
+            layer.circles.map(function(circle) {
+                circle.setMap(show ? self.map : null);
+            })
+        }
+    }
+
     this.showLayer = function(key) {
-        var layer = this.layers.filter(function(layer) {
+        var layer = this.ftLayers.filter(function(layer) {
             return layer.key == key;
         });
         layer[0].layer.setMap(this.map);
     }
 
     this.hideLayer = function(key) {
-        var layer = this.layers.filter(function(layer) {
+        var layer = this.ftLayers.filter(function(layer) {
             return layer.key == key;
         });
         layer[0].layer.setMap(null);
@@ -147,7 +178,8 @@ var MapManager = function MapManager(options) {
         if (layer.length == 0) {
             currentLayer = {
                 name: layerName,
-                markers: []
+                markers: [],
+                circles: []
             };
             self.markerLayers.push(currentLayer);
         } else {
@@ -176,6 +208,7 @@ var MapManager = function MapManager(options) {
             $.extend(circleOptions, circleCustomOptions);
             var circle = new google.maps.Circle(circleOptions);
             circle.setMap(self.map)
+            currentLayer.circles.push(circle);
         }
     }
 
@@ -204,6 +237,12 @@ var MapManager = function MapManager(options) {
     this.setMapType = function(type) {
         var self = this;
         var typeObj = self.types[type];
+
+        $('#' + type + ' .map_filters [type=checkbox]').each(function(index, checkbox) {
+            var show = $(checkbox).is(':checked');
+            var layer = $(checkbox).attr('data-layer');
+            self.toggleLayerVisibility(layer, show);
+        })
 
         if (!typeObj.ftClient) {
             self.clearPolygons();

@@ -13,9 +13,9 @@ var Qpbb = function Qpbb(mapManager, aqi) {
 
         $('#navigation li a').click(function(e) {
             var section = $(this).attr("data-section");
-            if ((section == "aire" ) && (!self.aqi.loaded)) {
+            if (section == "aire" && !self.aqi.loaded) {
                 self.aqi.init();
-            } else {
+            } else if (section == "denuncias" || section == "salud") {
                 var content = $('.' + section);
                 $("#map-canvas").appendTo(content);
                 self.mapManager.setMapType(section);
