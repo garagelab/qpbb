@@ -14,7 +14,7 @@
 
     <link rel="stylesheet/less" type="text/css" href="/assets/css/bootstrap-responsive.css">
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
+    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="/assets/js/jquery-1.8.3.min.js"></script>
     <script type='text/javascript' src='http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js'></script>
@@ -123,17 +123,11 @@
 
     <!-- Begin page content -->
     <div class="container">
-
         <div class="page-header">
             <h1>qpbb <small>¿Que pasa, Bahía Blanca?</small></h1>
         </div>
-
         <p class="lead" style="text-align:justify;">Convertimos datos municipales técnicos y no técnicos sobre salud y ambiente en información accesible y precisa para aumentar la visibilidad de los problemas de la ciudad, el Polo Petroquímico y el Puerto.</p>
         <p>Esta plataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
-
-
-
-
         <hr>
 
         <div class="tabbable tabs-left">
@@ -173,16 +167,29 @@
                                 <p>Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa.</p>
                             </div>
                             <hr>
-                            <div class="clearfix">
+                            <div class="clearfix" style="margin-bottom: 10px">
+                                <div class='wax-legend'>
+                                    <div class='legend-title'>Denuncias al CTE</div>
+                                    <div class='legend-scale'>
+                                        <ul class='legend-labels'>
+                                            <li><span style=''></span>0</li>
+                                            <li><span style=''></span></li>
+                                            <li><span style=''></span></li>
+                                            <li><span style=''></span></li>
+                                            <li><span style=''></span>200</li>
+                                        </ul>
+                                    </div>
+                                    <div class='legend-source'>Cantidad de denuncias por radio censal</a></div>
+                                </div>
                                 <div class="map_filters btn-group">
-                                    <button class="btn btn-primary">
+                                    <button class="btn btn btn-primary">
                                         <label class="checkbox">
-                                            <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del polo petroquímico
+                                            <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del Polo
                                         </label>
                                     </button>
                                     <button class="btn btn-primary">
                                         <label class="checkbox">
-                                            <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del polo petroquímico
+                                            <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del Polo
                                         </label>
                                     </button>
                                     <button class="btn btn-primary">
@@ -210,27 +217,42 @@
                                 <p>De las visitas a los centros de salud durante el 2012, más del 17% corresponden a problemas relacionados con las vías respiratorias. Los diagnósticos más significativos fueron dolor abdominal y pélvico, diarrea y gastroenteritis, bronquitis y bronqueolitis.</p>
                             </div>
                             <hr>
-                            <div class="map_filters btn-group">
-                                <button class="btn btn-primary">
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del polo petroquímico
-                                    </label>
-                                </button>
-                                <button class="btn btn-primary">
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del polo petroquímico
-                                    </label>
-                                </button>
-                                <button class="btn btn-primary">
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
-                                    </label>
-                                </button>
-                                <button class="btn btn-primary">
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="agua"> Agua
-                                    </label>
-                                </button>
+                            <div class="clearfix" style="margin-bottom: 10px">
+                                <div class='wax-legend'>
+                                    <div class='legend-title'>Consultas de salud</div>
+                                    <div class='legend-scale'>
+                                        <ul class='legend-labels'>
+                                            <li><span style=''></span>0</li>
+                                            <li><span style=''></span></li>
+                                            <li><span style=''></span></li>
+                                            <li><span style=''></span></li>
+                                            <li><span style=''></span>800</li>
+                                        </ul>
+                                    </div>
+                                    <div class='legend-source'>Cantidad de consultas de salud por radio censal</a></div>
+                                </div>
+                                <div class="map_filters btn-group">
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del Polo
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del Polo
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
+                                        </label>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="agua"> Agua
+                                        </label>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -22,7 +22,7 @@ var MapManager = function MapManager(options) {
             }
         },
         salud : {
-            minLog : 0, maxLog : 0,
+            minLog : 0, maxLog : 0, minCount : 0, maxCount : 0,
             ftClient : null,
             ftId : "1ngNauuZa6pB23RfA2HC5O5EUpOIeqbElspdBV-g",
             columnArray : ["Latitude", "Longitude", "Poligono"],
@@ -258,7 +258,7 @@ var MapManager = function MapManager(options) {
         } else {
             self.renderPolygons(type);
         }
-
+        console.log(self.types);        //TODO(gb): Remove trace!!!
     };
 
     this.addToCorrespondingPolygon = function(type, coordinate) {
@@ -282,6 +282,7 @@ var MapManager = function MapManager(options) {
         polygon[type].log = Math.log(polygon[type].count + 1);
         if (polygon[type].log > self.types[type].maxLog) {
             self.types[type].maxLog = polygon[type].log;
+            self.types[type].maxCount = polygon[type].count;
         }
     };
 
