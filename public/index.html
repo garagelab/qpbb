@@ -30,7 +30,7 @@
 
     <script>
         var mapManager;
-        var radiosFT, empresasFT, plantasFT;
+        var radiosFT, empresasFT, plantasFT, denunciasFT;
 
         $(window).load(function () {
             // Mapa
@@ -62,6 +62,14 @@
                 }
                 mapManager.setMapType("denuncias");
             });
+
+            // Tabla de denuncias
+            complaintList.init({
+                ftId: "1OoePLj4nJ-QNJRi_s3NhkpX7pz0plYT-w7gENOY",
+                rpp: 100,
+                orderBy: "'Fecha'"
+            });
+            complaintList.loadPage(0);
 
             // Medidor de aire
             mapManager.addToMarkerLayer("aire", "-38.757463,-62.286891", {
@@ -121,194 +129,222 @@
 <!-- Part 1: Wrap all page content here -->
 <div id="wrap">
 
-    <!-- Begin page content -->
-    <div class="container">
-        <div class="page-header">
-            <h1>qpbb <small>¿Que pasa, Bahía Blanca?</small></h1>
-        </div>
-        <p class="lead" style="text-align:justify;">Convertimos datos municipales técnicos y no técnicos sobre salud y ambiente en información accesible y precisa para aumentar la visibilidad de los problemas de la ciudad, el Polo Petroquímico y el Puerto.</p>
-        <p>Esta plataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
-        <hr>
+<!-- Begin page content -->
+<div class="container">
+<div class="page-header">
+    <h1>qpbb <small>¿Que pasa, Bahía Blanca?</small></h1>
+</div>
+<p class="lead" style="text-align:justify;">Convertimos datos municipales técnicos y no técnicos sobre salud y ambiente en información accesible y precisa para aumentar la visibilidad de los problemas de la ciudad, el Polo Petroquímico y el Puerto.</p>
+<p>Esta plataforma está preparada para crecer dinámicamente en un diálogo constante entre los ciudadanos, el municipio y las organizaciones.</p>
+<hr>
 
-        <div class="tabbable tabs-left">
-            <ul id="navigation" class="nav nav-tabs" style="min-height: 806px">
-                <li class="active">
-                    <a href="#denuncias" data-toggle="tab" data-section="denuncias">
-                        <strong>Denuncias</strong><br>
-                        <small class="muted">Denuncias realizadas al CTE</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="#salud" data-toggle="tab" data-section="salud">
-                        <strong>Salud</strong><br>
-                        <small class="muted">Consultas de salud</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="#aire" data-toggle="tab" data-section="aire">
-                        <strong>Aire</strong><br>
-                        <small class="muted">Mediciones de calidad de aire</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="#polo" data-toggle="tab" data-section="logo">
-                        <strong>Polo petroquímico</strong><br>
-                        <small class="muted">Empresas del polo petroquímico</small>
-                    </a>
-                </li>
-            </ul>
+<div class="tabbable tabs-left">
+<ul id="navigation" class="nav nav-tabs" style="min-height: 806px">
+    <li class="active">
+        <a href="#denuncias" data-toggle="tab" data-section="denuncias">
+            <strong>Denuncias</strong><br>
+            <small class="muted">Denuncias realizadas al CTE</small>
+        </a>
+    </li>
+    <li>
+        <a href="#salud" data-toggle="tab" data-section="salud">
+            <strong>Salud</strong><br>
+            <small class="muted">Consultas de salud</small>
+        </a>
+    </li>
+    <li>
+        <a href="#aire" data-toggle="tab" data-section="aire">
+            <strong>Aire</strong><br>
+            <small class="muted">Mediciones de calidad de aire</small>
+        </a>
+    </li>
+    <li>
+        <a href="#polo" data-toggle="tab" data-section="logo">
+            <strong>Polo petroquímico</strong><br>
+            <small class="muted">Empresas del polo petroquímico</small>
+        </a>
+    </li>
+</ul>
 
-            <div class="tab-content">
-                <div class="tab-pane active fade in" id="denuncias">
-                    <div class="row-fluid">
-                        <div class="denuncias span12">
-                            <div class="">
-                                <h3>¿Qué dicen los vecinos?</h3>
-                                <p>Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa.</p>
-                            </div>
-                            <hr>
-                            <div class="clearfix" style="margin-bottom: 10px">
-                                <div class='wax-legend'>
-                                    <div class='legend-title'>Denuncias al CTE</div>
-                                    <div class='legend-scale'>
-                                        <ul class='legend-labels'>
-                                            <li><span style=''></span>0</li>
-                                            <li><span style=''></span></li>
-                                            <li><span style=''></span></li>
-                                            <li><span style=''></span></li>
-                                            <li><span style=''></span>200</li>
-                                        </ul>
-                                    </div>
-                                    <div class='legend-source'>Cantidad de denuncias por radio censal</a></div>
-                                </div>
-                                <div class="map_filters btn-group">
-                                    <button class="btn btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del Polo
-                                        </label>
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del Polo
-                                        </label>
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
-                                        </label>
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="map-canvas"></div>
-                        </div>
-                    </div>
+<div class="tab-content">
+    <div class="tab-pane active fade in" id="denuncias">
+        <div class="row-fluid">
+            <div class="denuncias span12">
+                <div class="">
+                    <h3>¿Qué dicen los vecinos?</h3>
+                    <p>Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa.</p>
                 </div>
-
-                <div class="tab-pane fade" id="salud">
-                    <div class="row-fluid">
-                        <div class="salud span12">
-                            <div class="">
-                                <h3>¿Qué pasa con la salud?</h3>
-                                <p>De las visitas a los centros de salud durante el 2012, más del 17% corresponden a problemas relacionados con las vías respiratorias. Los diagnósticos más significativos fueron dolor abdominal y pélvico, diarrea y gastroenteritis, bronquitis y bronqueolitis.</p>
-                            </div>
-                            <hr>
-                            <div class="clearfix" style="margin-bottom: 10px">
-                                <div class='wax-legend'>
-                                    <div class='legend-title'>Consultas de salud</div>
-                                    <div class='legend-scale'>
-                                        <ul class='legend-labels'>
-                                            <li><span style=''></span>0</li>
-                                            <li><span style=''></span></li>
-                                            <li><span style=''></span></li>
-                                            <li><span style=''></span></li>
-                                            <li><span style=''></span>800</li>
-                                        </ul>
-                                    </div>
-                                    <div class='legend-source'>Cantidad de consultas de salud por radio censal</a></div>
-                                </div>
-                                <div class="map_filters btn-group">
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del Polo
-                                        </label>
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del Polo
-                                        </label>
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
-                                        </label>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade" id="aire">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div class="">
-                                <h3>¿Qué pasa con el aire?</h3>
-                                <p>Los valores de medición del aire son tomados por el único sensor que posee el CTE y que tiene un radio de alcance de 4 km y que se encuentra en el Parque Industrial de Bahía Blanca.</p>
-
-                                <p>Hemos confeccionado un gráfico basado en las mediciones de tal tal tal y según la normativa de Calidad de Aire de EPA (Air Quality Index de Environmental Protection Agency), que toma estos contaminantes y considera el más “grave”, y que cuenta con una gradación que va desde “cualidad del aire buena” hasta “peligrosa”.</p>
-
-                                <p>Desde el año 2009, se registraron 993 hs, equivalente a 41 días, en los cuales los índices de calidad de aire excedieron los niveles admitidos. De ese registro, 789 hs equivalente a 32 días, fue peligroso para grupos en situación de riesgo. Durante 178 hs, equivalente a 7 días, fue insalubre, durante 14 hs muy insalubre, y durante 20 hs, peligroso. Se registraron 975 hs donde el índice de Material Particulado PM10 fue mayor al aceptado por la norma. Se registraron niveles mayores a los admisibles de Monóxido de Carbono durante 10 hs y de Ozono por 8hs.</p>
-                            </div>
-                            <br>
-
-                            <div id="canvas"></div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade" id="polo">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div class="">
-                                <h3>¿Qué pasa con el polo petroquímico?</h3>
-                                <p>De las 16 empresas que ocupan el Polo, 3 son petroquímicas, 2 son petroleras, 1 es agroquímica, 4 son gasíferas, 1 es eléctrica, y 5 son cerealeras.</p>
-
-                                <p>De las 45 actas de inspección labradas por el CTE en el 2012, el 8 fueron hechas a la Central Piedrabuena S.A., 7 a Solvay Indupa S.A.I.C., y 6 a Petrobrás Argentina S.A.</p>
-                                <p>Listado de empresas:</p>
-                                <ul>
-                                    <li>YPF S.A.</li>
-                                    <li>TRANSPORTADORA DE GAS DEL SUR S.A. (R3)</li>
-                                    <li>SOLVAY INDUPA S.A.I.C.</li>
-                                    <li>PROFERTIL S.A.</li>
-                                    <li>PETROBRAS ARGENTINA S.A.</li>
-                                    <li>PBB-POLISUR S.A.</li>
-                                    <li>LDC ARGENTINA S.A.</li>
-                                    <li>Ex ESSO PETROLERA ARGENTINA SRL</li>
-                                    <li>COMPAÑIA MEGA S.A.</li>
-                                    <li>CENTRAL PIEDRA BUENA S.A</li>
-                                    <li>CARGILL S.A.C.</li>
-                                    <li>AIR LIQUIDE ARGENTINA S.A.</li>
+                <hr>
+                <div class="map">
+                    <div class="clearfix" style="margin-bottom: 10px">
+                        <div class='wax-legend'>
+                            <div class='legend-title'>Denuncias al CTE</div>
+                            <div class='legend-scale'>
+                                <ul class='legend-labels'>
+                                    <li><span style=''></span>0</li>
+                                    <li><span style=''></span></li>
+                                    <li><span style=''></span></li>
+                                    <li><span style=''></span></li>
+                                    <li><span style=''></span>200</li>
                                 </ul>
-                                <h6>Vuelco de efluentes industriales a la Ría:</h6>
-                                <p>Desde enero del 2011 hasta octubre del 2012 se registraron 49 casos en los que se superó el umbral de la norma en vuelcos de efluentes líquidos de empresas del Polo Petroquímico a la ria de Bahia Blanca. El 40 % de estos casos fue determinado por DBO (demanda biológica de oxígeno) comprometiendo el nivel de oxígeno necesario para el normal desarrollo de la vida acuática.</p>
-                                <p>Otras sustancias predominantes son residuos sólidos, DQO (demanda química de oxígeno) y coliformes fecales.</p>
-                                <p>Las empresas cuyos vuelcos de efluentes generaron mayor cantidad de casos fueron Cargill  40%  (por no cumplir con parámetros de DBO y DBQ) y ABSA 30%. (80 % de las infracciones son por no cumplir con parámetros de coliformes fecales.)</p>
-                                <p>Desde el año 2009, se registraron 993 hs, equivalente a 41 días, en los cuales los índices de calidad de aire excedieron los niveles admitidos. De ese registro, 789 hs equivalente a 32 días, fue peligroso para grupos en situación de riesgo. Durante 178 hs, equivalente a 7 días, fue insalubre, durante 14 hs muy insalubre, y durante 20 hs, peligroso. Se registraron 975 hs donde el índice de Material Particulado PM10 fue mayor al aceptado por la norma. Se registraron niveles mayores a los admisibles de Monóxido de Carbono durante 10 hs y de Ozono por 8hs.</p>
                             </div>
-                            <br>
+                            <div class='legend-source'>Cantidad de denuncias por radio censal</a></div>
+                        </div>
+                        <div class="map_filters btn-group">
+                            <button class="btn btn btn-primary">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del Polo
+                                </label>
+                            </button>
+                            <button class="btn btn-primary">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del Polo
+                                </label>
+                            </button>
+                            <button class="btn btn-primary">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
+                                </label>
+                            </button>
                         </div>
                     </div>
+                    <div id="map-canvas"></div>
                 </div>
-
+                <div class="table">
+                    <table id="complaint-list" class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Origen</th>
+                            <th>Descripción</th>
+                            <th>Informe</th>
+                            <th>Tags</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="complaintRow" style="display: none;">
+                            <td class="complaintDate">[FECHA DE LA DENUNCIA]</td>
+                            <td class="complaintOrigin">[ORIGEN]</td>
+                            <td class="complaintDescription" title="">[DESCRIPCION]</td>
+                            <td class="complaintReport">[INFORME]</td>
+                            <td class="complaintTags">[TAGS]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination pagination-centered pagination-small" id="pagination">
+                        <ul>
+                        </ul>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 
-    <br>
+    <div class="tab-pane fade" id="salud">
+        <div class="row-fluid">
+            <div class="salud span12">
+                <div class="">
+                    <h3>¿Qué pasa con la salud?</h3>
+                    <p>De las visitas a los centros de salud durante el 2012, más del 17% corresponden a problemas relacionados con las vías respiratorias. Los diagnósticos más significativos fueron dolor abdominal y pélvico, diarrea y gastroenteritis, bronquitis y bronqueolitis.</p>
+                </div>
+                <hr>
+                <div class="clearfix" style="margin-bottom: 10px">
+                    <div class='wax-legend'>
+                        <div class='legend-title'>Consultas de salud</div>
+                        <div class='legend-scale'>
+                            <ul class='legend-labels'>
+                                <li><span style=''></span>0</li>
+                                <li><span style=''></span></li>
+                                <li><span style=''></span></li>
+                                <li><span style=''></span></li>
+                                <li><span style=''></span>800</li>
+                            </ul>
+                        </div>
+                        <div class='legend-source'>Cantidad de consultas de salud por radio censal</a></div>
+                    </div>
+                    <div class="map_filters btn-group">
+                        <button class="btn btn-primary">
+                            <label class="checkbox">
+                                <input type="checkbox" name="empresas-del-polo" data-layer="empresas" checked> Empresas del Polo
+                            </label>
+                        </button>
+                        <button class="btn btn-primary">
+                            <label class="checkbox">
+                                <input type="checkbox" name="plantas-del-polo" data-layer="plantas" checked> Plantas del Polo
+                            </label>
+                        </button>
+                        <button class="btn btn-primary">
+                            <label class="checkbox">
+                                <input type="checkbox" name="medidor-de-aire" data-layer="aire" checked> Medidor de aire
+                            </label>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div id="push"></div>
+    <div class="tab-pane fade" id="aire">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="">
+                    <h3>¿Qué pasa con el aire?</h3>
+                    <p>Los valores de medición del aire son tomados por el único sensor que posee el CTE y que tiene un radio de alcance de 4 km y que se encuentra en el Parque Industrial de Bahía Blanca.</p>
+
+                    <p>Hemos confeccionado un gráfico basado en las mediciones de tal tal tal y según la normativa de Calidad de Aire de EPA (Air Quality Index de Environmental Protection Agency), que toma estos contaminantes y considera el más “grave”, y que cuenta con una gradación que va desde “cualidad del aire buena” hasta “peligrosa”.</p>
+
+                    <p>Desde el año 2009, se registraron 993 hs, equivalente a 41 días, en los cuales los índices de calidad de aire excedieron los niveles admitidos. De ese registro, 789 hs equivalente a 32 días, fue peligroso para grupos en situación de riesgo. Durante 178 hs, equivalente a 7 días, fue insalubre, durante 14 hs muy insalubre, y durante 20 hs, peligroso. Se registraron 975 hs donde el índice de Material Particulado PM10 fue mayor al aceptado por la norma. Se registraron niveles mayores a los admisibles de Monóxido de Carbono durante 10 hs y de Ozono por 8hs.</p>
+                </div>
+                <br>
+
+                <div id="canvas"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="polo">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="">
+                    <h3>¿Qué pasa con el polo petroquímico?</h3>
+                    <p>De las 16 empresas que ocupan el Polo, 3 son petroquímicas, 2 son petroleras, 1 es agroquímica, 4 son gasíferas, 1 es eléctrica, y 5 son cerealeras.</p>
+
+                    <p>De las 45 actas de inspección labradas por el CTE en el 2012, el 8 fueron hechas a la Central Piedrabuena S.A., 7 a Solvay Indupa S.A.I.C., y 6 a Petrobrás Argentina S.A.</p>
+                    <p>Listado de empresas:</p>
+                    <ul>
+                        <li>YPF S.A.</li>
+                        <li>TRANSPORTADORA DE GAS DEL SUR S.A. (R3)</li>
+                        <li>SOLVAY INDUPA S.A.I.C.</li>
+                        <li>PROFERTIL S.A.</li>
+                        <li>PETROBRAS ARGENTINA S.A.</li>
+                        <li>PBB-POLISUR S.A.</li>
+                        <li>LDC ARGENTINA S.A.</li>
+                        <li>Ex ESSO PETROLERA ARGENTINA SRL</li>
+                        <li>COMPAÑIA MEGA S.A.</li>
+                        <li>CENTRAL PIEDRA BUENA S.A</li>
+                        <li>CARGILL S.A.C.</li>
+                        <li>AIR LIQUIDE ARGENTINA S.A.</li>
+                    </ul>
+                    <h6>Vuelco de efluentes industriales a la Ría:</h6>
+                    <p>Desde enero del 2011 hasta octubre del 2012 se registraron 49 casos en los que se superó el umbral de la norma en vuelcos de efluentes líquidos de empresas del Polo Petroquímico a la ria de Bahia Blanca. El 40 % de estos casos fue determinado por DBO (demanda biológica de oxígeno) comprometiendo el nivel de oxígeno necesario para el normal desarrollo de la vida acuática.</p>
+                    <p>Otras sustancias predominantes son residuos sólidos, DQO (demanda química de oxígeno) y coliformes fecales.</p>
+                    <p>Las empresas cuyos vuelcos de efluentes generaron mayor cantidad de casos fueron Cargill  40%  (por no cumplir con parámetros de DBO y DBQ) y ABSA 30%. (80 % de las infracciones son por no cumplir con parámetros de coliformes fecales.)</p>
+                    <p>Desde el año 2009, se registraron 993 hs, equivalente a 41 días, en los cuales los índices de calidad de aire excedieron los niveles admitidos. De ese registro, 789 hs equivalente a 32 días, fue peligroso para grupos en situación de riesgo. Durante 178 hs, equivalente a 7 días, fue insalubre, durante 14 hs muy insalubre, y durante 20 hs, peligroso. Se registraron 975 hs donde el índice de Material Particulado PM10 fue mayor al aceptado por la norma. Se registraron niveles mayores a los admisibles de Monóxido de Carbono durante 10 hs y de Ozono por 8hs.</p>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+</div>
+
+<br>
+
+<div id="push"></div>
 </div>
 
 <div id="footer">
@@ -331,7 +367,8 @@
 
 <script src="/assets/js/MapManager.js"></script>
 <script src="/assets/js/FTClient.js"></script>
-<script src="/assets/js/qpbb.js"></script>
 <script src="/assets/js/aqi.js"></script>
+<script src="/assets/js/complaintList.js"></script>
+<script src="/assets/js/qpbb.js"></script>
 </body>
 </html>

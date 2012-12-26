@@ -258,7 +258,6 @@ var MapManager = function MapManager(options) {
         } else {
             self.renderPolygons(type);
         }
-        console.log(self.types);        //TODO(gb): Remove trace!!!
     };
 
     this.addToCorrespondingPolygon = function(type, coordinate) {
