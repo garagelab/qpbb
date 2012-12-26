@@ -170,7 +170,15 @@
     <div class="tab-pane active fade in" id="denuncias">
         <div class="row-fluid">
             <div class="span12">
-                <div class="">
+                <div class="modeSelector">
+                    <a href="#" class="current" data-mode="map">
+                        <i class="icon-map-marker" style="margin: 11px 0px 0px 7px" title="Vista Mapa"></i>
+                    </a>
+                    <a href="#" data-mode="table">
+                        <i class="icon-table" style="margin: 0px 6px" title="Vista Tabla"></i>
+                    </a>
+                </div>
+                <div>
                     <h3>¿Qué dicen los vecinos?</h3>
                     <p>Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa.</p>
                 </div>
@@ -210,7 +218,7 @@
                     </div>
                     <div id="map-canvas"></div>
                 </div>
-                <div class="table">
+                <div class="table" style="display: none">
                     <table id="complaint-list" class="table table-condensed">
                         <thead>
                         <tr>
@@ -361,6 +369,23 @@
             var layer = $(this).attr('data-layer');
             mapManager.toggleLayerVisibility(layer, show);
         });
+
+        $('.modeSelector a').click(function(event) {
+            var mode = $(this);
+            var other = $(this).parent().find("a.current");
+
+            if (mode.attr('data-mode') == other.attr('data-mode')) {
+                return;
+            }
+            
+            other.removeClass('current');
+            mode.addClass('current');
+            $('.' + other.attr('data-mode')).fadeOut('fast', function() {
+                $('.' + mode.attr('data-mode')).fadeIn('fast');
+            })
+
+            event.preventDefault();
+        })
 
     });
 </script>
