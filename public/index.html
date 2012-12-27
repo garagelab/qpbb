@@ -170,19 +170,15 @@
     <div class="tab-pane active fade in" id="denuncias">
         <div class="row-fluid">
             <div class="span12">
-                <div class="modeSelector">
-                    <a href="#" class="current" data-mode="map">
-                        <i class="icon-map-marker" style="margin: 11px 0px 0px 7px" title="Vista Mapa"></i>
-                    </a>
-                    <a href="#" data-mode="table">
-                        <i class="icon-table" style="margin: 0px 6px" title="Vista Tabla"></i>
-                    </a>
-                </div>
                 <div>
                     <h3>¿Qué dicen los vecinos?</h3>
                     <p>Desde el 2008 los vecinos percibieron y reportaron 3695 anomalías ambientales, de los cuales cerca de 1600 se localizan en este mapa.</p>
                 </div>
                 <hr>
+                <div class="btn-group modeSelector" style="margin-top: 0;margin-right: 15px;">
+                          <a class="btn btn-inverse active" data-mode="map"><i class="icon-map-marker"></i></a>
+                          <a class="btn btn-inverse" data-mode="table"><i class="icon-table"></i></a>
+                        </div>
                 <div class="map denuncias">
                     <div class="clearfix" style="margin-bottom: 10px">
                         <div class='wax-legend'>
@@ -198,6 +194,7 @@
                             </div>
                             <div class='legend-source'>Cantidad de denuncias por radio censal</a></div>
                         </div>
+                        
                         <div class="map_filters btn-group">
                             <button class="btn btn btn-primary">
                                 <label class="checkbox">
@@ -218,7 +215,7 @@
                     </div>
                     <div id="map-canvas"></div>
                 </div>
-                <div class="table" style="display: none">
+                <div class="table" style="display: none; margin-top:1.5em;">
                     <table id="complaint-list" class="table table-condensed">
                         <thead>
                         <tr>
@@ -372,14 +369,14 @@
 
         $('.modeSelector a').click(function(event) {
             var mode = $(this);
-            var other = $(this).parent().find("a.current");
+            var other = $(this).parent().find("a.active");
 
             if (mode.attr('data-mode') == other.attr('data-mode')) {
                 return;
             }
             
-            other.removeClass('current');
-            mode.addClass('current');
+            other.removeClass('active');
+            mode.addClass('active');
             $('.' + other.attr('data-mode')).fadeOut('fast', function() {
                 $('.' + mode.attr('data-mode')).fadeIn('fast');
             })
