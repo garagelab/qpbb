@@ -2,8 +2,8 @@ var FTClient = function FTClient(tableId) {
 
     this.tableId = tableId;
 
-    this._queryUrlHead = 'https://fusiontables.googleusercontent.com/fusiontables/api/query?sql=';
-    this._queryUrlTail = '&jsonCallback=?';
+    this._queryUrlHead = 'https://www.googleapis.com/fusiontables/v1/query?sql=';
+    this._queryUrlTail = '&key=AIzaSyBiJ0t5J-ha55dTwZxGDomI5xeakEq7ur8';
 
     this.query = function(columnArray, whereClause, orderClause, success, error) {
         var self = this;

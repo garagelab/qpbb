@@ -54,11 +54,11 @@
             // Poligonos de radios censales (Denuncias y Salud)
             radiosFT = new FTClient("1Oc--K4VExbbFppPSm8gG-7GtheahmEPH3ZeKT1I");
             radiosFT.query(["name", "geometry", "SHAPE_AREA"], null, null, function(data) {
-                var rows = data.table.rows;
+                var rows = data.rows;
 
                 for (var i=0; i<rows.length; i++) {
                     var row = rows[i];
-                    mapManager.addPolygon(row[0], row[1].coordinates[0], row[2]);
+                    mapManager.addPolygon(row[0], row[1].geometry.coordinates[0], row[2]);
                 }
                 mapManager.setMapType("denuncias");
             });
@@ -85,11 +85,11 @@
             // Layer de empresas
             empresasFT = new FTClient("1R1pVgXnt7aCYNK7r2UJVnOrDZ5-vFaJlj8XToZw");
             empresasFT.query(["geometry"], null, null, function(data) {
-                var rows = data.table.rows;
+                var rows = data.rows;
 
                 for (var i=0; i<rows.length; i++) {
                     var row = rows[i];
-                    mapManager.addToPolygonLayer("empresas", row[0].coordinates[0], {
+                    mapManager.addToPolygonLayer("empresas", row[0].geometry.coordinates[0], {
                         strokeColor: "#000000",
                         strokeOpacity: 0.5,
                         fillColor: "#999999",
@@ -102,7 +102,7 @@
             // Layers de plantas
             plantasFT = new FTClient("1n-HEILAiMokDtCEaUWAzpGR_QkRP9eihyDLW_f0");
             plantasFT.query(["posicion"], null, null, function(data) {
-                var rows = data.table.rows;
+                var rows = data.rows;
 
                 for (var i=0; i<rows.length; i++) {
                     var row = rows[i];

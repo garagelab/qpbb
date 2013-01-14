@@ -249,7 +249,7 @@ var MapManager = function MapManager(options) {
             var ftClient = new FTClient(typeObj.ftId);
             typeObj.ftClient = ftClient;
             typeObj.ftClient.query(typeObj.columnArray, typeObj.whereClause, typeObj.orderClause, function(data) {
-                var rows = data.table.rows;
+                var rows = data.rows;
                 for (var i=0; i<rows.length; i++) {
                     self.addToPolygon(type, typeObj.getPolygonName(rows[i]));
                 }

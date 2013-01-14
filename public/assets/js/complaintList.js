@@ -45,7 +45,7 @@ var complaintList = {
             dataType: 'json',
             success: function(data) {
                 // Build results
-                var complaints = data.table.rows;
+                var complaints = data.rows;
                 complaints.map(self._addComplaintRow, self);
                 self._updateResultsCount(page, complaints.length);
                 self._buildPagination(page, complaints.length);
